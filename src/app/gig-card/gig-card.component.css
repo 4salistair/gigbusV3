@@ -1,0 +1,26 @@
+p {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  
+  Button {
+    font-family: Arial, Helvetica, sans-serif;
+     font-size: 1em;
+  }
+  .example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+  
+  .cardFormat {
+    width: 400px;
+
+  }
+
+  .b {
+      font-size: 15px;
+  }

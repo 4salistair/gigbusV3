@@ -1,0 +1,53 @@
+
+<div fxLayout="column" fxLayoutAlign="space-around center">
+    <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered">
+      <mat-card>
+        <mat-card-header> 
+          <mat-card-title>    {{ gig.gigArtistName }} </mat-card-title>
+          <mat-card-subtitle> {{ gig.gigDescription }} </mat-card-subtitle>
+          <mat-card-subtitle> {{ gig.gigVenueName}} </mat-card-subtitle>
+          <mat-card-subtitle> {{ gig.gigDate.toMillis()  | date: 'medium' }} </mat-card-subtitle>
+              <!--?? .toMillis()  | date: 'medium' ??--> 
+        </mat-card-header> 
+    
+       
+        <mat-card-content><br> 
+          The total cost: <b>£{{ gig.gigTotalPrice }}</b><br><br>
+          The number of people currently going: <b>{{ gig.gigPunterCount }}</b><br><br>
+          This means costs per person is: <b>£{{ gig.gigRunningCostPerPunter  }}</b><br><br>
+          Places left: <b>{{ 8 - gig.gigPunterCount }} </b><br><br>
+          With all seats taken the cost would be: <b>£{{ (gig.gigTotalPrice / 8) | number:'1.2-2' }}</b>    
+        </mat-card-content>
+  
+      
+        <mat-card-actions>
+   
+          
+          <!-- <p *ngIf="gigMatch"> We have a gig Match</p>-->
+        
+          <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gigs)">    SIGN UP </button>
+  
+     
+  
+     
+         <!-- <button mat-button  mat-raised-button (click)="testToggle(gig.id)">ALREADY LIKED TEXT</button>
+         <button mat-button  mat-raised-button *ngIf="isAlready" (click)="addPunterGig(gig.id)">ALREADY LIKED NO</button>  -->
+ 
+          <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">LIKE</button>
+          <button mat-button  mat-raised-button *ngIf="isAuth">SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+    <br>
+    <br>
+    
+  </div>   
+</div>  
+    
+    <!-- <div *ngIf="gigs$ | async; let Gigs; else loading">
+      <ul>
+        <li *ngFor="let gig of Gigs">
+          {{  Gigs.gigVenueName }}
+        </li>
+      </ul>
+      <div *ngIf="Gigs.length === 0">No results, try clearing filters</div>
+    </div> -->

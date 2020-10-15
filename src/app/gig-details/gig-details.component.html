@@ -1,0 +1,46 @@
+<mat-vertical-stepper  mobile-step-text="true">
+    <h1 mat-dialog-title> How does this work?</h1>
+      <mat-step label = 'About GigBus'> 
+        <ul>
+        It's simple GigBus is a platform to enable folks from your town to see more gigs.
+       </ul>
+       <ul>
+        By grouping together to arrange and drive down transport costs home from the gig. 
+       </ul>
+      </mat-step>
+      <mat-step label = 'How does it work'> 
+        <ul>
+        Sign up for a Gig by putting down a deposit.
+        </ul>
+        <ul>
+         We then have 7 days to drive down the cost of transport  by getting more people on the bus.
+        </ul> 
+        <ul>
+          If in 7 days we do not reach the target the deposit is refunded. 
+        </ul>
+        <ul>
+          Once the bus is full you pay rest of the cost transport via the GigBus app.
+        </ul>
+        </mat-step>
+      <mat-step label = 'Tickets'> 
+        <ul>
+          The next question is what about Tickets... 
+        </ul>
+          <!-- Gigbus is not a ticketing site,if the gig sells out in the 7 days again all deposits are refunded. Once the bus is full Gig Bus scans the internet to show you the best option for tickets. -->
+      </mat-step>
+      
+      <mat-step label = 'Gig Info'> 
+        <ul>
+       Okay so you up for {{passData.gigArtistName}} at {{ passData.gigVenueName}} on {{ passData.gigDate.toMillis()   | date: 'medium' }} great choice!
+      </ul>
+        <ul>
+       Share this as widely as you can to get the price down. 
+      </ul>
+      </mat-step>
+       <mat-step label = 'Sign Up'> 
+           <app-signup></app-signup> 
+       </mat-step>
+    </mat-vertical-stepper> 
+    
+    
+    
