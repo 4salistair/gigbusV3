@@ -26,6 +26,12 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { GigMineComponent } from './gig-mine/gig-mine.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { FacebookModule, FacebookService } from 'ngx-facebook';
+import { ShareModule } from 'ngx-sharebuttons';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { AddVenueComponent } from './venue-add/venue-add.component';
+
 
 @NgModule({
   declarations: [
@@ -38,9 +44,15 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     PunterAlreadyOnGig,
     GigMineComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    AddVenueComponent
   ],
   imports: [
+    ShareIconsModule,
+    ShareButtonsModule,
+    ShareModule,
+    FacebookModule.forRoot(),
+   // FacebookService,
     FormsModule,
     FlexLayoutModule,
     BrowserModule,
@@ -48,6 +60,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     MaterialModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    // FacebookModule.forRoot(environment.facebook),
     AngularFirestoreModule,
     AngularFireAuthModule],
   providers: [GigService, AuthService, UIService, { provide: MaterialModule, useValue: [] }],

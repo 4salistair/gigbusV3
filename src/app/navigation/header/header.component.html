@@ -1,9 +1,13 @@
+       
+
 <mat-toolbar>
+
     <div fxHide.gt-xs>
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
-        </button>
+        </button>   
     </div>
+      
     <div> <a routerLink="/">gigBus</a></div>
 
     <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
@@ -29,18 +33,24 @@
                     All Gigs
                 </a>
             </li>
-            <li  *ngIf="isAuth"> 
-                <a style="cursor: pointer" routerLink="/addgigs">
-                    Add Gig
+       
+            <li *ngIf="isAuth">
+                <a>
+                <button mat-button class="nav-items" [matMenuTriggerFor]="menu">Config</button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item routerLink="/addgigs">Add Gigs</button>
+                      <button mat-menu-item routerLink="/addvenue">Add Venue</button>
+                    </mat-menu>
                 </a>
             </li>
+
             <li *ngIf="isAuth">
                 <a style="cursor: pointer" (click)="onLogout()">
                     Logout
                 </a>
-            </li>
-            
-        </ul>  
+            </li>     
+        </ul> 
+       
     </div>
   
 </mat-toolbar>

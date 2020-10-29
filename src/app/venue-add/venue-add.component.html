@@ -1,0 +1,33 @@
+<mat-card class="example-card">
+    <mat-card-title> Add Gig Details</mat-card-title>
+        <br>
+        
+        <form #f="ngForm"  (ngSubmit)="onSubmit(f)">
+            <mat-form-field appearance="fill">
+                <mat-label>Venue Name</mat-label>
+                <input matInput name="venueName" ngModel>
+            </mat-form-field>
+        <br>
+            <mat-form-field appearance="fill">
+                <mat-label>Venue City</mat-label> 
+                <mat-select name="venueCity" ngModel>
+                    <mat-option value="Manchester">Manchester</mat-option>
+                    <mat-option value="Liverpool">Liverpool</mat-option>
+                </mat-select>
+            </mat-form-field>
+        <br>  
+            <mat-form-field appearance="fill">
+                <mat-label>Venue Post Code</mat-label>
+                <textarea matInput name="venuePostCode" ngModel> </textarea>
+            </mat-form-field>
+    
+        <mat-card-actions>
+            <button type="Submit" mat-raised-button>  Add Venue </button>
+        </mat-card-actions>
+  
+    </form>
+ </mat-card>
+ 
+<br> <br>
+    <button  mat-raised-button (click)="Reset(f)">  Reset </button>
+<br>

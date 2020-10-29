@@ -22,6 +22,7 @@ import {  MatSortModule } from '@angular/material/sort';
 import {  MatSnackBarModule } from '@angular/material/snack-bar';
 import {  MatStepperModule } from '@angular/material/stepper';
 import {  MatProgressBarModule } from '@angular/material/progress-bar';
+import {  MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -48,7 +49,9 @@ import {  MatProgressBarModule } from '@angular/material/progress-bar';
              MatSnackBarModule,
              MatStepperModule,
              MatDialogModule,
-             MatProgressBarModule ],
+             MatProgressBarModule,
+             MatMenuModule
+             ],
 
 exports: [
              MatCardModule,
@@ -57,7 +60,7 @@ exports: [
              MatFormFieldModule,
              MatInputModule,
              MatDatepickerModule,
-            // MatNativeDateModule,
+             MatNativeDateModule,
              MatCheckboxModule,
              MatSidenavModule,
              MatToolbarModule,
@@ -70,7 +73,8 @@ exports: [
              MatSnackBarModule,
              MatSortModule,
              MatStepperModule,
-             MatDialogModule ]
+             MatDialogModule,
+             MatMenuModule ]
 
             })
             export class MaterialModule {}

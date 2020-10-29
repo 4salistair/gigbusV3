@@ -1,6 +1,32 @@
+
+<!-- <h1 mat-dialog-title> How does this work?</h1>
+
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Yes</button>
+  <button mat-button [mat-dialog-close]="false">No </button>
+</mat-dialog-actions> -->
+
+
+<!-- <mat-horizontal-stepper mobile-step-text="true">
+  <mat-step>
+    <h1 mat-dialog-title> 1</h1>
+  </mat-step>
+  <mat-step>
+    <h1 mat-dialog-title> 2</h1>
+  </mat-step>
+  <mat-step>
+    <h1 mat-dialog-title> 3</h1>
+  </mat-step>
+</mat-horizontal-stepper>
+
+
+
+
+
 <mat-vertical-stepper  mobile-step-text="true">
     <h1 mat-dialog-title> How does this work?</h1>
-      <mat-step label = 'About GigBus'> 
+
+   <mat-step label = 'About GigBus'> 
         <ul>
         It's simple GigBus is a platform to enable folks from your town to see more gigs.
        </ul>
@@ -26,12 +52,12 @@
         <ul>
           The next question is what about Tickets... 
         </ul>
-          <!-- Gigbus is not a ticketing site,if the gig sells out in the 7 days again all deposits are refunded. Once the bus is full Gig Bus scans the internet to show you the best option for tickets. -->
+           Gigbus is not a ticketing site,if the gig sells out in the 7 days again all deposits are refunded. Once the bus is full Gig Bus scans the internet to show you the best option for tickets. 
       </mat-step>
       
       <mat-step label = 'Gig Info'> 
         <ul>
-       Okay so you up for {{passData.gigArtistName}} at {{ passData.gigVenueName}} on {{ passData.gigDate.toMillis()   | date: 'medium' }} great choice!
+       Okay so you up for {{passData.gigArtistName}} at {{ passData.gigVenueName}} on {{ passData.gigDate  | date: 'medium' }} great choice!
       </ul>
         <ul>
        Share this as widely as you can to get the price down. 
@@ -40,7 +66,23 @@
        <mat-step label = 'Sign Up'> 
            <app-signup></app-signup> 
        </mat-step>
-    </mat-vertical-stepper> 
+    </mat-vertical-stepper>   
+     -->
     
+     <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+      {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+    </button> -->
+    <mat-horizontal-stepper>
+      <mat-step>
+        <p>You are now done.</p>
+      </mat-step>
     
+      <!-- <mat-step>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button>Reset</button>
+        </div>
+      </mat-step> -->
+    </mat-horizontal-stepper>
     

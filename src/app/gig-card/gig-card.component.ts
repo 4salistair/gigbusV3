@@ -5,6 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { Gigs } from '../gig.model';
 import { MatDialog } from '@angular/material/dialog';
 import { GigDetailsComponent } from '../gig-details/gig-details.component';
+import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 
 @Component({
   selector: 'app-gig-card',
@@ -28,6 +29,9 @@ export class GigCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
+
 
     this.gigSubscription = this.gigService.gigsChanged.subscribe(
       gigs => (this.gigs = gigs)

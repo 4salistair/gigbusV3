@@ -1,13 +1,19 @@
 
+
 <div fxLayout="column" fxLayoutAlign="space-around center">
     <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered">
       <mat-card>
+        
         <mat-card-header> 
+
+          <fb-share href="https://github.com/zyra/ngx-facebook-sdk/">dddd</fb-share>
           <mat-card-title>    {{ gig.gigArtistName }} </mat-card-title>
           <mat-card-subtitle> {{ gig.gigDescription }} </mat-card-subtitle>
           <mat-card-subtitle> {{ gig.gigVenueName}} </mat-card-subtitle>
           <mat-card-subtitle> {{ gig.gigDate.toMillis()  | date: 'medium' }} </mat-card-subtitle>
-              <!--?? .toMillis()  | date: 'medium' ??--> 
+              <!--?? .toMillis()  | date: 'medium' ??-->  
+              
+       
         </mat-card-header> 
     
        
@@ -21,20 +27,11 @@
   
       
         <mat-card-actions>
-   
-          
-          <!-- <p *ngIf="gigMatch"> We have a gig Match</p>-->
         
-          <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gigs)">    SIGN UP </button>
-  
-     
-  
-     
-         <!-- <button mat-button  mat-raised-button (click)="testToggle(gig.id)">ALREADY LIKED TEXT</button>
-         <button mat-button  mat-raised-button *ngIf="isAlready" (click)="addPunterGig(gig.id)">ALREADY LIKED NO</button>  -->
- 
+          <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gigs)"> SIGN UP </button> 
           <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">LIKE</button>
           <button mat-button  mat-raised-button *ngIf="isAuth">SHARE</button>
+
         </mat-card-actions>
       </mat-card>
     <br>

@@ -1,5 +1,5 @@
 
-
+ 
 
 <mat-card class="example-card">
     <mat-card-title> Add Gig Details</mat-card-title>
@@ -10,15 +10,19 @@
                 <mat-label>Gig Artist Name</mat-label>
                 <input matInput name="gigArtistName" ngModel>
             </mat-form-field>
-        <br>
-            <mat-form-field appearance="fill">
-                <mat-label>Gig Venue Name</mat-label> 
-                <mat-select name="gigVenueName" ngModel>
-                    <mat-option value="Manchester">Manchester</mat-option>
-                    <mat-option value="Liverpool">Liverpool</mat-option>
-                </mat-select>
-            </mat-form-field>
-        <br>  
+   
+
+     <mat-form-field appearance="fill">
+
+        <mat-select placeholder = "Choose Venue" ngModel name="venue" required>
+             <mat-option *ngFor="let venue of venues" [value]="venue.id"> 
+                {{ venue.venueName }}
+            </mat-option>  
+             
+        </mat-select>
+    </mat-form-field>
+    <br>
+
             <mat-form-field appearance="fill">
                 <mat-label>Gig Description</mat-label>
                 <textarea matInput name="gigDescription" ngModel> </textarea>

@@ -4,6 +4,7 @@ import { Subject, Subscription } from 'rxjs/';
 import { map } from 'rxjs/operators';
 
 import { Gigs } from './gig.model';
+import { Venues } from './venue.model';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({
@@ -14,6 +15,9 @@ export class GigService {
 
   private availableGigs: Gigs[] = [];
   gigsChanged = new Subject<Gigs[]>();
+
+  private availableVenues: Venues[] = [];
+  venuesChanged = new Subject<Venues[]>();
 
   private filteredGigs: Gigs[] = [];
   filteredGigsChanged = new Subject<Gigs[]>();
@@ -32,6 +36,10 @@ constructor(private db: AngularFirestore,
 addGig(gig: Gigs): void {
       this.db.collection('gigs').add(gig);
   }
+
+addVenue(venue: Venues): void {
+      this.db.collection('venues').add(venue);
+}
 
 fetchGigs(): void {
   this.db
@@ -58,6 +66,31 @@ fetchGigs(): void {
     this.gigsChanged.next([...this.availableGigs]);
     });
 }
+
+
+fetchVenues(): void {
+  this.db
+  .collection('venues')
+  .snapshotChanges()
+  .pipe(map(docData => {
+    return docData.map(doc => {
+    return {
+      id: doc.payload.doc.id,
+      venueCity: doc.payload.doc.data()['venueCity'],
+      venueName: doc.payload.doc.data()['venueName'],
+      venuePostCode: doc.payload.doc.data()['venuePostCode'],
+      };
+    });
+   })
+  )
+  .subscribe((venue: Venues[]) => {
+    this.availableVenues =  venue;
+    this.venuesChanged.next([...this.availableVenues]);
+    });
+}
+
+
+
 
     fetchGigsForCurrentUser(): void {
 
