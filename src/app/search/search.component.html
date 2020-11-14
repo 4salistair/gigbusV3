@@ -1,0 +1,45 @@
+ 
+ <mat-card class="example-card">
+    <mat-card-title> Search</mat-card-title>
+        <br>
+        
+        <form #f="ngForm"  (ngSubmit)="onSubmit(f)">
+            <mat-form-field appearance="fill">
+                <mat-label>Gig Artist Name</mat-label>
+                <input matInput name="gigArtistName" ngModel required>
+            </mat-form-field>
+
+             
+            <mat-form-field appearance="fill">
+                <mat-label>Gig Artist Name</mat-label>
+                <input matInput (keyup)="searchTerm$.next($event.target.value)" name="gigArtistName" ngModel required>
+            </mat-form-field>
+            {{ searchTerm$ | async }} 
+
+            <mat-form-field appearance="fill">
+                <mat-label>Gig Artist Name2</mat-label>
+                <input matInput (keyup)="searchPass($event.target.value)" name="gigArtistName2" ngModel required>
+            </mat-form-field>
+<!--  -->
+            <mat-form-field appearance="fill">
+
+                <mat-select placeholder = "Choose Venue" ngModel name="gigVenueName" required>
+                    <mat-option *ngFor="let venue of venues" [value]="venue.id"> 
+                    {{ venue.venueName }}
+                    </mat-option>  
+                </mat-select>
+            </mat-form-field>
+
+
+       
+        <mat-card-actions>
+            <button type="Submit" mat-raised-button>  Search </button>
+        </mat-card-actions>
+    </form>
+
+    <!-- <input
+    type="text"
+    (keyup)="searchTerm$.next($event.target.value)"
+  />
+    {{searchTerm$}} -->
+</mat-card> 

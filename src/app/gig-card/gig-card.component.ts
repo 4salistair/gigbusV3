@@ -6,6 +6,8 @@ import { Gigs } from '../gig.model';
 import { MatDialog } from '@angular/material/dialog';
 import { GigDetailsComponent } from '../gig-details/gig-details.component';
 import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-gig-card',
@@ -22,6 +24,15 @@ export class GigCardComponent implements OnInit {
   gigFilterSubscription: Subscription;
   gigsFiltered: Gigs[];
 
+  searchSubscription: Subscription;
+  searchFiltered: Gigs;
+  gigName: string[];
+
+  searchTermSubscription: Subscription;
+  searchTerm: string;
+
+  searchArtistNameSubscription: Subscription;
+  ArtistName: string;
 
   constructor( private gigService: GigService,
                private dialog: MatDialog,
@@ -51,7 +62,26 @@ export class GigCardComponent implements OnInit {
       );
     this.gigService.fetchGigsForCurrentUser();
 
+
+    this.searchSubscription = this.gigService.searchGigsChanged.subscribe(
+      searchFiltered => (this.searchFiltered = searchFiltered
+      )
+    );
+
+    this.searchTermSubscription = this.gigService.searchGigsChanged.subscribe(
+      searchFiltered => (this.searchFiltered = searchFiltered
+      )
+    );
+
+
+    this.searchArtistNameSubscription = this.gigService.searchArtistNameChanged.subscribe(
+        ArtistName => (this.ArtistName = ArtistName
+      )
+    );
+
   }
+
+
 
   signUp(gig: Gigs): void {
 

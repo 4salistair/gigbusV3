@@ -1,55 +1,113 @@
 
  
 
-<mat-card class="example-card">
+ <mat-card class="example-card">
     <mat-card-title> Add Gig Details</mat-card-title>
         <br>
         
         <form #f="ngForm"  (ngSubmit)="onSubmit(f)">
             <mat-form-field appearance="fill">
                 <mat-label>Gig Artist Name</mat-label>
-                <input matInput name="gigArtistName" ngModel>
+                <input matInput name="gigArtistName" ngModel required>
             </mat-form-field>
-   
-
-     <mat-form-field appearance="fill">
-
-        <mat-select placeholder = "Choose Venue" ngModel name="venue" required>
-             <mat-option *ngFor="let venue of venues" [value]="venue.id"> 
-                {{ venue.venueName }}
-            </mat-option>  
-             
-        </mat-select>
-    </mat-form-field>
-    <br>
 
             <mat-form-field appearance="fill">
+
+                <mat-select placeholder = "Choose Venue" ngModel name="gigVenueName" required>
+                    <mat-option *ngFor="let venue of venues" [value]="venue.id"> 
+                    {{ venue.venueName }}
+                    </mat-option>  
+                </mat-select>
+            </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-chip-list #chipList aria-label="Genre selection"
+            
+            matInput
+            ngModel
+            name="gigGenre">
+                <mat-chip
+                    *ngFor="let Genre of Genres"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(Genre)">
+                    {{Genre}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+            <input
+               
+                matInput
+                ngModel
+                name="gigGenre" 
+                placeholder="Genre..."
+                #genresInput
+                [formControl]="genreCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let Genre of filteredGenres | async" [value]="Genre">
+                    {{Genre}}
+                </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>
+        <br>
+            <mat-form-field appearance="fill">
                 <mat-label>Gig Description</mat-label>
-                <textarea matInput name="gigDescription" ngModel> </textarea>
+                <textarea matInput name="gigDescription" ngModel required> </textarea>
             </mat-form-field>
         <br>
             <mat-label>Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker" name="gigDate" ngModel>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker>
-            </mat-datepicker>
+                <input matInput [matDatepicker]="picker" name="gigDate" ngModel required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker>
+                    </mat-datepicker>
         <br> 
             <mat-form-field appearance="fill">
                 <mat-label>Total Price</mat-label>
-                <input matInput name="gigTotalPrice" ngModel>
+                <input matInput name="gigTotalPrice" ngModel required>
             </mat-form-field>
         <br>
-  
+                   
         <mat-card-actions>
-            <button type="Submit" mat-raised-button>  Add Gig </button>
+            <button type="Submit" mat-raised-button [disabled]="f.invalid">  Add Gig </button>
         </mat-card-actions>
-  
     </form>
- </mat-card>
+</mat-card>
  
-<br> <br>
+ <br> <br>
     <button  mat-raised-button (click)="Reset(f)">  Reset </button>
 <br>
-    
+
+<!-- <form #f="ngForm"  (ngSubmit)="onSubmit(f)">
+<mat-form-field class="example-chip-list">
+    <mat-chip-list #chipList aria-label="Genre selection">
+      <mat-chip
+        *ngFor="let Genre of Genres"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(Genre)">
+        {{Genre}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="New genres..."
+        #genresInput
+        [formControl]="genreCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let Genre of filteredGenres | async" [value]="Genre">
+        {{Genre}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>     -->
 
   

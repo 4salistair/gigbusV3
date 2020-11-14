@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Subject, Subscription } from 'rxjs/';
 import { map } from 'rxjs/operators';
@@ -21,6 +21,12 @@ export class GigService {
 
   private filteredGigs: Gigs[] = [];
   filteredGigsChanged = new Subject<Gigs[]>();
+
+  private searchGigs: Gigs[];
+  searchGigsChanged = new Subject <Gigs>();
+
+  searchArtistNameChanged = new Subject <string>();
+
   userID: string;
   authSubscription: Subscription;
 
@@ -28,6 +34,11 @@ export class GigService {
   private punterGigs: Gigs;
   private runningGigs: Gigs;
 
+    // //
+    searchTermViaService = new Subject<string>();
+    @Output() searchTerm: EventEmitter<string> = new EventEmitter();
+    // //
+  
 
 constructor(private db: AngularFirestore,
             private authServices: AuthService,
@@ -174,5 +185,20 @@ deleteGigForPunter(id: string): void {
 
   this.db.collection('puntersGigs').doc(id).delete();
 }
+
+searchforGigs(gig: Gigs): void {
+  // this.db.collection('gigs').add(gig);
+ // this.searchGigs = gig;
+
+  console.log('gig in service ' + gig.gigArtistName);
+  this.searchGigsChanged.next(gig);
+
+  }
+
+  searchValues(artistName: string ): void{
+
+    this.searchArtistNameChanged.next(artistName);
+
+  }
 
 }

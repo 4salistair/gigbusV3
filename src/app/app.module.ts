@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from './material.module';
@@ -31,6 +31,8 @@ import { ShareModule } from 'ngx-sharebuttons';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AddVenueComponent } from './venue-add/venue-add.component';
+import { SearchComponent } from './search/search.component';
+import { SearchPipe } from './search.pipe';
 
 
 @NgModule({
@@ -45,22 +47,23 @@ import { AddVenueComponent } from './venue-add/venue-add.component';
     GigMineComponent,
     HeaderComponent,
     SidenavListComponent,
-    AddVenueComponent
+    AddVenueComponent,
+    SearchComponent,
+    SearchPipe
   ],
   imports: [
     ShareIconsModule,
     ShareButtonsModule,
     ShareModule,
     FacebookModule.forRoot(),
-   // FacebookService,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    // FacebookModule.forRoot(environment.facebook),
     AngularFirestoreModule,
     AngularFireAuthModule],
   providers: [GigService, AuthService, UIService, { provide: MaterialModule, useValue: [] }],
