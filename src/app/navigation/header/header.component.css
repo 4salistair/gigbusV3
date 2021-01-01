@@ -6,7 +6,19 @@ a {
 
 }
 
-a:hover,
+/* a:hover,
+a:active{
+
+    color: lightgray;
+
+}  */
+
+.a:hover,
+.a:active{
+    color: lightgray;
+}
+
+
 a:active{
 
     color: lightgray;
@@ -34,4 +46,13 @@ a:active{
     font-size: 20px;
     padding-left: 6px;
 
+}
+
+.grey {
+   color: lightgray;
+
+}
+
+.black {
+    color: black;
 }

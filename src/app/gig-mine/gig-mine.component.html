@@ -25,21 +25,12 @@
       
         <mat-card-actions>
        
-          <button mat-button  mat-raised-button>SHARE
-          <share-button mat-button   button="facebook"></share-button>
-        </button>
-          <share-button  button="twitter"></share-button> 
-          <share-button  button="WhatsApp"></share-button>
-
-          <share-buttons [theme]="'mat-button'"
- [include]="['facebook','twitter','messenger','whatsapp','copy']"
- [show]="5"
- [size]="1"
- [url]="'https://twitter.com/'"
- [title]="'Share'"
- [autoSetMeta]="false"
-></share-buttons>
+          <button mat-button  mat-raised-button>SHARE </button>
           <button mat-button  mat-raised-button (click)="deleteGig(gig.id)">Nah not for me</button>
+  
+          <share-button mat-button   button="facebook"></share-button>
+          <share-button  button="twitter"></share-button> 
+          
         </mat-card-actions>
       </mat-card>
     <br>

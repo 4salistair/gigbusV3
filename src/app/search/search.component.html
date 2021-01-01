@@ -4,42 +4,43 @@
         <br>
         
         <form #f="ngForm"  (ngSubmit)="onSubmit(f)">
+   
             <mat-form-field appearance="fill">
-                <mat-label>Gig Artist Name</mat-label>
-                <input matInput name="gigArtistName" ngModel required>
+                <mat-label>Artist</mat-label>
+                <input matInput (keyup)="searchPass($event.target.value)" name="gigArtistName" ngModel>
             </mat-form-field>
 
-             
-            <mat-form-field appearance="fill">
-                <mat-label>Gig Artist Name</mat-label>
-                <input matInput (keyup)="searchTerm$.next($event.target.value)" name="gigArtistName" ngModel required>
-            </mat-form-field>
-            {{ searchTerm$ | async }} 
+                <mat-form-field appearance="fill">
+                    <mat-label>City</mat-label> 
+                    <mat-select name="venueCity" ngModel>
+                        <mat-option>Any</mat-option> 
+                        <mat-option value ="Manchester">Manchester</mat-option>
+                        <mat-option value ="Liverpool">Liverpool</mat-option>
+                        <mat-option value ="Leeds">Leeds</mat-option>
+                    </mat-select>
+                </mat-form-field>    
 
-            <mat-form-field appearance="fill">
-                <mat-label>Gig Artist Name2</mat-label>
-                <input matInput (keyup)="searchPass($event.target.value)" name="gigArtistName2" ngModel required>
-            </mat-form-field>
-<!--  -->
-            <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill">
+                    <mat-label>Genre</mat-label> 
+                    <mat-select placeholder = "Genre"  ngModel name="gigGenre">
+                        <mat-option>Any</mat-option>  
+                        <mat-option value ="Hip Hop">Hip Hop</mat-option>  
+                        <mat-option value ="Funk">Funk</mat-option>  
+                        <mat-option value ="Raggae">Raggae</mat-option>  
+                        <mat-option value ="Soul">Soul</mat-option>  
+                    </mat-select>
+                </mat-form-field>
 
-                <mat-select placeholder = "Choose Venue" ngModel name="gigVenueName" required>
-                    <mat-option *ngFor="let venue of venues" [value]="venue.id"> 
-                    {{ venue.venueName }}
-                    </mat-option>  
-                </mat-select>
-            </mat-form-field>
-
-
-       
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" name="gigDate" ngModel>
+                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker>
+                    </mat-datepicker>
+                </mat-form-field>
+                
         <mat-card-actions>
             <button type="Submit" mat-raised-button>  Search </button>
         </mat-card-actions>
     </form>
-
-    <!-- <input
-    type="text"
-    (keyup)="searchTerm$.next($event.target.value)"
-  />
-    {{searchTerm$}} -->
 </mat-card> 
+  

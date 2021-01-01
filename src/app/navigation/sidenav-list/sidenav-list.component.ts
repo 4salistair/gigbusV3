@@ -15,8 +15,6 @@ export class SidenavListComponent implements OnInit {
   authSubscription: Subscription;
   constructor(private authServices: AuthService) { }
 
-
-
   ngOnInit(): void {
 
     this.authSubscription = this.authServices.authChange.subscribe( authStatus => {
@@ -25,10 +23,9 @@ export class SidenavListComponent implements OnInit {
   }
 
   OnClose(): void  {
-
     this.closeSidenav.emit();
-
   }
+
   OnLogout(): void  {
     this.OnClose();
     this.authServices.logout();
@@ -37,5 +34,6 @@ export class SidenavListComponent implements OnInit {
   ngOndestroy(): void  {
     this.authSubscription.unsubscribe();
   }
+
 }
 

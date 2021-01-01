@@ -11,13 +11,16 @@ import { Gigs } from './gig.model';
  count: number;
  resultArray: Gigs[];
  gigDataPush: Gigs[];
-    transform( value: Gigs[], filteredGigs: Gigs[], searchGigs: Gigs ): Gigs[] {
 
-    if (value === undefined || filteredGigs === undefined ) {
+
+transform( value: Gigs[], filteredGigs: Gigs[] ): Gigs[] {
+
+
+
+    if (value === undefined || filteredGigs === undefined) {
         return value;
         }
 
-        console.log(searchGigs.gigArtistName);
 
     for (const ItemFromValue of value) {
              for (const ItemFilteredGig of filteredGigs) {
@@ -27,18 +30,6 @@ import { Gigs } from './gig.model';
                   }
             }
       }
-
-    
-
-      for (const ItemFromValue of value) {
-
-                 if (ItemFromValue.gigArtistName.search(searchGigs.gigArtistName) == -1) {
-                    value.splice(value.map((el) => el.gigArtistName).indexOf(ItemFromValue.gigArtistName), 1);
-                 }
-
-           
-      }
-
 
     return value;
 

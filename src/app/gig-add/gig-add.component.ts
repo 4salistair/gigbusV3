@@ -6,15 +6,7 @@ import { Gigs } from '../gig.model';
 import { Venues } from '../venue.model';
 import { NgForm } from '@angular/forms/forms';
 
-///
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Observable} from 'rxjs';
-import {ElementRef, ViewChild} from '@angular/core'; // ? Component
-import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {map, startWith} from 'rxjs/operators';
-///
+
 
 @Component({
   selector: 'app-gig-add',
@@ -26,75 +18,20 @@ import {map, startWith} from 'rxjs/operators';
 
 export class GigAddComponent implements OnInit {
   private gigMapArray: Gigs;
+  private venueMapArry: Venues;
   venues: Venues[];
   private venuesSubscription: Subscription;
+  private venuesdetailsSubscription: Subscription;
+  public city = 'Manchester';
 
 
-///
-visible = true;
-selectable = true;
-removable = true;
-separatorKeysCodes: number[] = [ENTER, COMMA];
-genreCtrl = new FormControl();
-filteredGenres: Observable<string[]>;
-Genres: string[] = [];
-allGenres: string[] = ['Hip-Hop', 'Funk', 'Soul', 'House', 'Techno'];
-
-@ViewChild('genresInput') genresInput: ElementRef<HTMLInputElement>;
-@ViewChild('auto') matAutocomplete: MatAutocomplete;
-
-///
+GigVenueName: string;
 
   constructor(
     private gigService: GigService,
     private uiService: UIService
     )
-  {
-///
-
-  this.filteredGenres = this.genreCtrl.valueChanges.pipe(
-  startWith(null),
-  map((genre: string | null) => genre ? this._filter(genre) : this.allGenres.slice()));
-
-///
-
-  }
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our Genre
-    if ((value || '').trim()) {
-      this.Genres.push(value.trim());
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-
-    this.genreCtrl.setValue(null);
-  }
-
-  remove(genre: string): void {
-    const index = this.Genres.indexOf(genre);
-
-    if (index >= 0) {
-      this.Genres.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.Genres.push(event.option.viewValue);
-    this.genresInput.nativeElement.value = '';
-    this.genreCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allGenres.filter(genres => genres.toLowerCase().indexOf(filterValue) === 0);
-  }
+  { }
 
   ngOnInit(): void {
 
@@ -103,28 +40,46 @@ allGenres: string[] = ['Hip-Hop', 'Funk', 'Soul', 'House', 'Techno'];
     );
 
     this.gigService.fetchVenues();
-   // this.venues.map((el) => el.venueName)
 
+    }
+
+
+  cityPass(city: string): void{
+    this.city = city;
   }
 
   onSubmit(form: NgForm): void {
 
-    this.gigMapArray = {
-      gigArtistName: form.value.gigArtistName,
-      gigDate: form.value.gigDate,
-      gigDescription: form.value.gigDescription,
-      gigVenueName: form.value.gigVenueName,
-      gigPunterCount: 0,
-      gigRunningCostPerPunter: form.value.gigTotalPrice,
-      gigTotalPrice: form.value.gigTotalPrice,
-      gigGenre: form.value.gigGenre,
+  this.venues.forEach(venue => {
+    if ( venue.id === form.value.gigVenueName ) {
+
+      this.venueMapArry = {
+
+        venueCity: venue.venueCity,
+        venueName: venue.venueName,
+        venuePostCode: venue.venuePostCode
 
       };
 
-    console.log(this.gigMapArray.gigArtistName);
-    this.gigService.addGig(this.gigMapArray);
-    this.uiService.showSnackbar('Gig added', null, 3000);
-    form.resetForm();
+      } }) ;
+
+
+
+  this.gigMapArray = {
+      gigArtistName: form.value.gigArtistName,
+      gigDate: form.value.gigDate,
+      gigDescription: form.value.gigDescription,
+      gigVenue: this.venueMapArry,
+      gigPunterCount: 0,
+      gigRunningCostPerPunter: form.value.gigTotalPrice,
+      gigTotalPrice: form.value.gigTotalPrice,
+      gigGenre: form.value.genre
+
+      };
+
+  this.gigService.addGig(this.gigMapArray);
+  this.uiService.showSnackbar('Gig added', null, 3000);
+  form.resetForm();
   }
 
   Reset(form: NgForm): void {
@@ -132,8 +87,86 @@ allGenres: string[] = ['Hip-Hop', 'Funk', 'Soul', 'House', 'Techno'];
   }
 
   OnDestroy(): void {
-    this.venuesSubscription.unsubscribe;
+   if (this.venuesSubscription) {
+      this.venuesSubscription.unsubscribe();
+   }
+
   }
+
+
+
+// IMPORTS for CHIPS ///
+// import {FormControl, ReactiveFormsModule} from '@angular/forms';
+// import {COMMA, ENTER} from '@angular/cdk/keycodes';
+// import {Observable} from 'rxjs';
+// import {ElementRef, ViewChild} from '@angular/core'; // ? Component
+// import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
+// import {MatChipInputEvent} from '@angular/material/chips';
+// import {map, startWith} from 'rxjs/operators';
+// ///
+
+  //  CODE FOR CHIPS ///
+//////////////////////
+// visible = true;
+// selectable = true;
+// removable = true;
+// separatorKeysCodes: number[] = [ENTER, COMMA];
+// genreCtrl = new FormControl();
+// filteredGenres: Observable<string[]>;
+// Genres: string[] = [];
+// allGenres: string[] = ['Hip-Hop', 'Funk', 'Soul', 'House', 'Techno'];
+// @ViewChild('genresInput') genresInput: ElementRef<HTMLInputElement>;
+// @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
+// ///
+
+// ///
+
+//   this.filteredGenres = this.genreCtrl.valueChanges.pipe(
+//   startWith(null),
+//   map((genre: string | null) => genre ? this._filter(genre) : this.allGenres.slice()));
+
+// ///
+
+  
+  // add(event: MatChipInputEvent): void {
+  //   const input = event.input;
+  //   const value = event.value;
+
+  //   // Add our Genre
+  //   if ((value || '').trim()) {
+  //     this.Genres.push(value.trim());
+  //   }
+
+  //   // Reset the input value
+  //   if (input) {
+  //     input.value = '';
+  //   }
+
+  //   this.genreCtrl.setValue(null);
+  // }
+
+  // remove(genre: string): void {
+  //   const index = this.Genres.indexOf(genre);
+
+  //   if (index >= 0) {
+  //     this.Genres.splice(index, 1);
+  //   }
+  // }
+
+  // selected(event: MatAutocompleteSelectedEvent): void {
+  //   this.Genres.push(event.option.viewValue);
+  //   this.genresInput.nativeElement.value = '';
+  //   this.genreCtrl.setValue(null);
+  // }
+
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+
+  //   return this.allGenres.filter(genres => genres.toLowerCase().indexOf(filterValue) === 0);
+  // }
+
+
 
 }
 

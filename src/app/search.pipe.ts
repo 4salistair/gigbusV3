@@ -1,34 +1,54 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core'
 import { Gigs } from './gig.model';
 
 
 @Pipe({
-  name: 'SearchPipe'
+  name: 'SearchPipe',
+  pure: true
 })
 
 
 export class SearchPipe implements PipeTransform {
 
-  transform(value: Gigs[], artistName: string ): Gigs[] {
-  // console.log(.map(=>{} ));
-  console.log(artistName);
-
-    // if (value === usearchFilterndefined || filteredGigs === undefined ) {
-    //   return value;
-    //   }
+  valueForReturning: Gigs[];
+  calledAlready: boolean;
 
 
-   // for (const ItemFromValue of value) {
-     //   for (const ItemFilteredGig of filteredGigs) {
+transform(value: Gigs[], search: Gigs): Gigs[] {
 
-//              if (ItemFromValue.gigArtistName === 'New Order') {
-//                console.log('Elbow');
-//                 //   value.splice(value.map((el) => el.gigArtistName).indexOf(ItemFromValue.gigArtistName), 1);
-//              }
-//      //  }
-//  }
+ 
 
-    return value;
+    if (value === undefined || search === undefined) {
+         return value;
+      }
+
+
+
+    if(( search.gigGenre === '' || search.gigGenre == undefined ) 
+         && (search.gigVenue.venueCity !== undefined)) { 
+         value = value.filter(i => i.gigVenue.venueCity == search.gigVenue.venueCity)
+         
+         return value;
+        }
+
+    if(( search.gigVenue.venueCity === '' || search.gigVenue.venueCity == undefined ) 
+          && (search.gigGenre !== undefined)) { 
+         value = value.filter(i => i.gigGenre == search.gigGenre)
+
+         return value;
+        }
+
+    if(( search.gigVenue.venueCity !== undefined) && (search.gigGenre !== undefined) ) {
+         value = value.filter(i => i.gigVenue.venueCity == search.gigVenue.venueCity
+                                && i.gigGenre == search.gigGenre)
+
+         return value;        
+        }
+
+
+  
+    return value 
+   
   }
-
+  
 }

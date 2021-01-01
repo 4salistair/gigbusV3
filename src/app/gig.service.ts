@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Gigs } from './gig.model';
 import { Venues } from './venue.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { analytics } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,8 @@ export class GigService {
 
   searchArtistNameChanged = new Subject <string>();
 
+  lookUpValueInDocChange = new Subject <any>();
+
   userID: string;
   authSubscription: Subscription;
 
@@ -38,7 +41,12 @@ export class GigService {
     searchTermViaService = new Subject<string>();
     @Output() searchTerm: EventEmitter<string> = new EventEmitter();
     // //
-  
+
+    //
+    returnedItem: any;
+    //
+
+
 
 constructor(private db: AngularFirestore,
             private authServices: AuthService,
@@ -50,7 +58,7 @@ addGig(gig: Gigs): void {
 
 addVenue(venue: Venues): void {
       this.db.collection('venues').add(venue);
-}
+  }
 
 fetchGigs(): void {
   this.db
@@ -62,7 +70,8 @@ fetchGigs(): void {
       id: doc.payload.doc.id,
       gigArtistName: doc.payload.doc.data()['gigArtistName'],
       gigDescription: doc.payload.doc.data()['gigDescription'],
-      gigVenueName: doc.payload.doc.data()['gigVenueName'],
+      gigGenre: doc.payload.doc.data()['gigGenre'],
+      gigVenue: doc.payload.doc.data()['gigVenue'],
       gigDate: doc.payload.doc.data()['gigDate'],
       gigTotalPrice: doc.payload.doc.data()['gigTotalPrice'],
       gigRunningCostPerPunter: doc.payload.doc.data()['gigRunningCostPerPunter'],
@@ -101,13 +110,11 @@ fetchVenues(): void {
 }
 
 
+fetchGigsForCurrentUser(): void {
 
+  this.authServices.getUserID();
 
-    fetchGigsForCurrentUser(): void {
-
-      this.authServices.getUserID();
-
-      this.authSubscription = this.authServices.currentUser.subscribe(
+  this.authSubscription = this.authServices.currentUser.subscribe(
          userID => {(userID = userID);
                     this.userID = userID;
                     const filter = this.db.collection('puntersGigs', ref => ref.where('userid', '==', userID ));
@@ -182,23 +189,67 @@ runningCostDecrement(gigID: string): void {
 }
 
 deleteGigForPunter(id: string): void {
-
   this.db.collection('puntersGigs').doc(id).delete();
 }
 
 searchforGigs(gig: Gigs): void {
-  // this.db.collection('gigs').add(gig);
- // this.searchGigs = gig;
-
-  console.log('gig in service ' + gig.gigArtistName);
   this.searchGigsChanged.next(gig);
-
-  }
+}
 
   searchValues(artistName: string ): void{
-
     this.searchArtistNameChanged.next(artistName);
-
   }
 
 }
+
+// lookUpValueInDoc(collectName: string, documentID: string, fieldName: string ): void {
+
+//   const filter = this.db.doc(collectName + '/' + documentID);
+
+//   filter
+//    .snapshotChanges()
+//    .pipe(map(docData => {
+//     return docData.payload.data()[fieldName]; }
+//     )
+//     )
+//     .subscribe( ( returnedItem: any) => {
+//              this.returnedItem =  returnedItem;
+//              console.log('venue in function' + this.returnedItem);
+//              this.db.collection(collectName + '/' + documentID).add(this.returnedItem);
+//             // this.lookUpValueInDocChange.next([...this.returnedItem]);
+//              }
+//             );
+
+             
+
+//         }
+//  // return this.returnedItem;
+
+
+// fetchVenueForCurrentGig(VenueID: string): void {
+
+//   // this.authServices.getUserID();
+ 
+ 
+//    const filter = this.db.doc('venues' + '/' + VenueID);
+ 
+//    this.db
+//    .collection('venues' + '/' + VenueID)
+//    .snapshotChanges()
+//    .pipe(map(docData => {
+//      return docData.map(doc => {
+//      return {
+//        id: doc.payload.doc.id,
+//        venueCity: doc.payload.doc.data()['venueCity'],
+//        venueName: doc.payload.doc.data()['venueName'],
+//        venuePostCode: doc.payload.doc.data()['venuePostCode'],
+//        };
+//      });
+//     })
+//    )
+//    .subscribe((venue: Venues[]) => {
+//      this.availableVenues =  venue;
+//      this.venuesChanged.next([...this.availableVenues]);
+//      });
+ 
+//   }

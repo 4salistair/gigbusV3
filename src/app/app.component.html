@@ -6,19 +6,22 @@
 <app-sidenav-list></app-sidenav-list>
 <app-header></app-header> -->
 
-<app-search></app-search>
-<router-outlet></router-outlet>
+
+<!-- <router-outlet></router-outlet> -->
 
 <mat-sidenav-container>
     <mat-sidenav #sidenav role="navigation">
         <app-sidenav-list (closeSidenav)="sidenav.close()"></app-sidenav-list>       
     </mat-sidenav>
 
-    <mat-sidenav-content> 
-        <app-header (sideNavToggle)="sidenav.toggle()"></app-header>    
+ 
+
+ <mat-sidenav-content> 
+    <app-header (sideNavToggle)="sidenav.toggle()"></app-header>   
+    
         <main> 
             <router-outlet></router-outlet>
-        </main>
+         </main>
   </mat-sidenav-content>
 
 </mat-sidenav-container> 

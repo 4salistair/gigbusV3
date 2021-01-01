@@ -10,9 +10,11 @@ import { Subscription } from 'rxjs/';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   @Output() sideNavToggle =  new EventEmitter<void>();
+  @Output() searchToggle =  new EventEmitter<boolean>();
 
   isAuth = false;
   authSubscription: Subscription;
+  isSearch = false;
 
   constructor(private authServices: AuthService) { }
 
@@ -25,7 +27,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onToggleSidenav(): void {
-    this.sideNavToggle.emit();
+   this.sideNavToggle.emit();
+  }
+
+  onToggleSearch(): void {
+    this.isSearch = !this.isSearch;
+  }
+
+  onToggleWhenLoginOrSignup(): void {
+    this.isSearch = false;
   }
 
   onLogout(): void  {

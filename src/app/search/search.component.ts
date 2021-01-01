@@ -4,16 +4,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { GigService } from '../gig.service';
 import { UIService } from '../ui.service';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { Gigs } from '../gig.model';
 import { Venues } from '../venue.model';
 import { NgForm } from '@angular/forms/forms';
 
 
-import { Subject, Observable } from 'rxjs';
-// import {  debounceTime } from 'rxjs/operators';
-// import 'rxjs/add/operator/debounceTime';
-//
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-search',
@@ -48,21 +46,22 @@ export class SearchComponent implements OnInit {
       venues => ( this.venues = venues )
     );
     this.gigService.fetchVenues();
-
-
-  
   }
   onSubmit(form: NgForm): void {
+
+    
+    this.gigService.fetchGigs();
 
     this.gigName = form.value.gigArtistName;
 
 
     this.gigSearchArray = {
       gigArtistName: form.value.gigArtistName,
-      gigVenueName: form.value.gigVenueName
-    };
+      gigGenre: form.value.gigGenre,
+      gigVenue:  {venueCity: form.value.venueCity},
+      gigDate: form.value.gigDate
+      };
 
-    console.log('GIG SEARCH ' + this.gigSearchArray.gigArtistName);
     this.gigService.searchforGigs(this.gigSearchArray);
 
   }
@@ -73,10 +72,10 @@ export class SearchComponent implements OnInit {
     this.gigService.searchValues(value);
   }
 
-  searchGig(): void {
-    this.gigService.searchforGigs(this.gigSearchArray);
-    console.log(this.gigSearchArray.gigArtistName);
-    // console.log('Search' +  this.gigSearchArray.map(el => {console.log(el.gigArtistName); } ));
-  }
+  // searchGig(): void {
+  //   this.gigService.searchforGigs(this.gigSearchArray);
+  //   console.log(this.gigSearchArray.gigArtistName);
+  //   // console.log('Search' +  this.gigSearchArray.map(el => {console.log(el.gigArtistName); } ));
+  // }
 
 }

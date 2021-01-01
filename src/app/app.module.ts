@@ -33,6 +33,7 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AddVenueComponent } from './venue-add/venue-add.component';
 import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './search.pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { SearchPipe } from './search.pipe';
     ShareModule,
     FacebookModule.forRoot(),
     FormsModule,
+    Ng2SearchPipeModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     BrowserModule,
@@ -65,7 +67,8 @@ import { SearchPipe } from './search.pipe';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule],
+    AngularFireAuthModule
+  ],
   providers: [GigService, AuthService, UIService, { provide: MaterialModule, useValue: [] }],
   bootstrap: [AppComponent]
 })

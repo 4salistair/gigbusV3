@@ -1,8 +1,11 @@
+import { Venues } from './venue.model';
+
+
 export interface Gigs {
 
     id?: string;
     gigDescription?: string;
-    gigVenueName?: string;
+    gigVenue?: Venues;
     gigArtistName?: string;
     gigDate?: Date;
     gigTotalPrice?: number;

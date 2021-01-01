@@ -1,35 +1,20 @@
 
- <div  *ngIf="searchFiltered">  
-    <mat-card>
-      <mat-card-header> 
-         <mat-card-title> {{ searchFiltered.gigArtistName }}   </mat-card-title>
-      </mat-card-header>
-    </mat-card> 
- </div>
-
-
- <div  *ngIf="ArtistName">  
-  <mat-card>
-    <mat-card-header> 
-       <mat-card-title> {{ ArtistName  }}    </mat-card-title>
-       <div   *ngFor="let gig of gigs | SearchPipe: searchFiltered">
-       </div>
-    </mat-card-header>
-  </mat-card> 
-</div>
- 
-
-<div fxLayout="column" fxLayoutAlign="space-around center">
-    <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered : searchFiltered ">
+      <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered | filter: ArtistName | SearchPipe: searchFiltered"> 
       
-      <mat-card>
+
+        <mat-card>
         
         <mat-card-header> 
           <mat-card-title>    {{ gig.gigArtistName }} </mat-card-title>
-          <mat-card-subtitle> {{ gig.gigDescription }} </mat-card-subtitle>
-          <mat-card-subtitle> {{ gig.gigVenueName}} </mat-card-subtitle>
-          <mat-card-subtitle> {{ gig.gigDate }} </mat-card-subtitle>
-              <!--?? .toMillis()  | date: 'medium' ??-->         
+          <mat-card-subtitle><br> 
+            <b> {{ gig.gigDescription }}</b> <br> <br> 
+           At the <b>  {{ gig.gigVenue.venueName }} </b> 
+                                  in <b>  {{ gig.gigVenue.venueCity }} </b>
+                                  on the  <b>  {{ gig.gigDate.toDate() | date }} </b>
+                         <br>
+                          <b>  {{ gig.gigGenre}} </b>
+          </mat-card-subtitle>
+       
         </mat-card-header> 
     
        
@@ -47,15 +32,16 @@
           <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gigs)"> SIGN UP </button> 
           <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">LIKE</button>
           <button mat-button  mat-raised-button *ngIf="isAuth">SHARE</button>
-
+    
         </mat-card-actions>
       </mat-card>
     <br>
     <br>
   </div>
-  <!-- </div>    -->
-</div>  
+  
+<!-- </div>   -->
     
+<!-- </div>    -->
     <!-- <div *ngIf="gigs$ | async; let Gigs; else loading">
       <ul>
         <li *ngFor="let gig of Gigs">
@@ -64,3 +50,40 @@
       </ul>
       <div *ngIf="Gigs.length === 0">No results, try clearing filters</div>
     </div> -->
+
+
+ <!-- <div  *ngIf="searchFiltered">  
+    <mat-card>
+      <mat-card-header> 
+         <mat-card-title> {{ searchFiltered.gigArtistName }}   </mat-card-title>
+      </mat-card-header>
+    </mat-card> 
+ </div>
+ -->
+
+
+ <!-- <div  *ngIf="ArtistName">  
+  <mat-card>
+    <mat-card-header> 
+       <mat-card-title>  {{ ArtistName  }}    </mat-card-title>
+       <div   *ngFor="let gig of gigs | SearchPipe: searchFiltered">
+       </div>
+    </mat-card-header>
+  </mat-card> 
+</div> -->
+<!-- 
+<tr *ngFor="let user of userRecords | filter:filterTerm"></tr> -->
+
+
+  <!-- <div class="cardFormat" *ngFor="let gig of gigs |  filter: ArtistName">
+  <mat-card>
+
+      <mat-card-header> 
+        <mat-card-title>  {{ ArtistName  }}   </mat-card-title>
+        <mat-card-subtitle> {{ gig.gigArtistName }} </mat-card-subtitle>
+        <mat-card-subtitle> {{ gig.gigDescription }} </mat-card-subtitle>
+        <mat-card-subtitle> {{ gig.gigVenueName }} </mat-card-subtitle>
+        <mat-card-subtitle> {{ gig.gigDate }} </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card> 
+  </div> -->
