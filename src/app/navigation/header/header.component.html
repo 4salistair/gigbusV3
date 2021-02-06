@@ -15,7 +15,11 @@
         </button>   
     </div>
 
-
+    <div fxHide.gt-xs>
+        <button mat-icon-button (click)="onToggleSearch()">
+            <mat-icon>price</mat-icon>
+        </button>   
+    </div>
       
     <div> <a routerLink="/">gigBus</a></div>
 
@@ -46,6 +50,12 @@
             <li> 
                 <a [ngClass]="{'grey' : isSearch, 'black': !isSearch}"  style="cursor: pointer" routerLink="" (click)="onToggleSearch()">
                     Search
+                </a>
+            </li>
+
+            <li *ngIf="isAuth"> 
+                <a class="a" style="cursor: pointer" routerLink="/price">
+                    Price
                 </a>
             </li>
        

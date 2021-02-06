@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-gig-details',
@@ -12,9 +14,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
-//   constructor(@Inject(MAT_DIALOG_DATA) public passData: any) { }
 
-constructor() {}
+
+constructor( @Inject(MAT_DIALOG_DATA) public passData: any) { }
+
+// constructor() {}
 
 
 ngOnInit(): void{

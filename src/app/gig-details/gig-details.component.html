@@ -1,88 +1,64 @@
 
-<!-- <h1 mat-dialog-title> How does this work?</h1>
+<h1 mat-dialog-title> What is GigBus??</h1>
+
+
+<mat-vertical-stepper mobile-step-text="true" >
+  <mat-step label = 'About GigBus'>
+    <ul>
+      It's simple GigBus is a platform to enable folks from your town to see more gigs.
+     </ul>
+     <ul>
+      The lack of public transport and high hotel cost are barrier to attending gigs.
+     </ul>
+     <ul>
+      By using Gigbus you can see more gigs by grouping together to arrange and drive down transport costs home from the gig. 
+     </ul>
+  </mat-step>
+  <mat-step label = 'How does it work'> 
+    <ul>
+    Sign up for a Gig by putting down a small deposit.
+    </ul>
+    <ul>
+     We then have a number of days to drive down the cost per person for the transport, by getting more people signed up for the gig by word of mouth and sharing on social media.
+    </ul> 
+    <ul>
+    
+     </ul> 
+    <ul>
+     Once the bus is full you pay rest of the cost transport via the GigBus app.
+    </ul>
+    <ul>
+     If the bus does not full up by the deadline and thus the target is not reached all deposits are refunded. 
+    </ul>
+    </mat-step>
+    <mat-step label = 'What about the tickets?'> 
+      <ul>
+        Good question what about Tickets... 
+      </ul>
+      <ul>
+         Gigbus is not a ticketing site,if the gig sells out during or 3 days after the deadline again all deposits are refunded. 
+      </ul>
+      <ul>
+         GigBus shows you the options for tickets. 
+      </ul>
+    </mat-step> 
+    
+    <mat-step label = 'Gig Info'> 
+      <ul>
+     Okay so your up for {{passData.gigArtistName}} at the {{ passData.gigVenueName}} in {{ passData.gigVenueCity}}  on {{ passData.gigDate.toDate() | date  }} great choice!
+    </ul>
+      <ul>
+     Share this as widely as you can to get the price down. 
+    </ul>
+    </mat-step>
+    <mat-step label = 'Sign Up'> 
+      <app-signup></app-signup> 
+    </mat-step>
+</mat-vertical-stepper> 
 
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]="true">Yes</button>
   <button mat-button [mat-dialog-close]="false">No </button>
-</mat-dialog-actions> -->
+</mat-dialog-actions>
 
-
-<!-- <mat-horizontal-stepper mobile-step-text="true">
-  <mat-step>
-    <h1 mat-dialog-title> 1</h1>
-  </mat-step>
-  <mat-step>
-    <h1 mat-dialog-title> 2</h1>
-  </mat-step>
-  <mat-step>
-    <h1 mat-dialog-title> 3</h1>
-  </mat-step>
-</mat-horizontal-stepper>
-
-
-
-
-
-<mat-vertical-stepper  mobile-step-text="true">
-    <h1 mat-dialog-title> How does this work?</h1>
-
-   <mat-step label = 'About GigBus'> 
-        <ul>
-        It's simple GigBus is a platform to enable folks from your town to see more gigs.
-       </ul>
-       <ul>
-        By grouping together to arrange and drive down transport costs home from the gig. 
-       </ul>
-      </mat-step>
-      <mat-step label = 'How does it work'> 
-        <ul>
-        Sign up for a Gig by putting down a deposit.
-        </ul>
-        <ul>
-         We then have 7 days to drive down the cost of transport  by getting more people on the bus.
-        </ul> 
-        <ul>
-          If in 7 days we do not reach the target the deposit is refunded. 
-        </ul>
-        <ul>
-          Once the bus is full you pay rest of the cost transport via the GigBus app.
-        </ul>
-        </mat-step>
-      <mat-step label = 'Tickets'> 
-        <ul>
-          The next question is what about Tickets... 
-        </ul>
-           Gigbus is not a ticketing site,if the gig sells out in the 7 days again all deposits are refunded. Once the bus is full Gig Bus scans the internet to show you the best option for tickets. 
-      </mat-step>
-      
-      <mat-step label = 'Gig Info'> 
-        <ul>
-       Okay so you up for {{passData.gigArtistName}} at {{ passData.gigVenueName}} on {{ passData.gigDate  | date: 'medium' }} great choice!
-      </ul>
-        <ul>
-       Share this as widely as you can to get the price down. 
-      </ul>
-      </mat-step>
-       <mat-step label = 'Sign Up'> 
-           <app-signup></app-signup> 
-       </mat-step>
-    </mat-vertical-stepper>   
-     -->
-    
-     <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-      {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-    </button> -->
-    <mat-horizontal-stepper>
-      <mat-step>
-        <p>You are now done.</p>
-      </mat-step>
-    
-      <!-- <mat-step>
-        <p>You are now done.</p>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button>Reset</button>
-        </div>
-      </mat-step> -->
-    </mat-horizontal-stepper>
     

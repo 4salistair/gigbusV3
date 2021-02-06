@@ -3,11 +3,8 @@ import { Subscription} from 'rxjs';
 import { GigService } from '../gig.service';
 import { AuthService } from '../auth/auth.service';
 import { Gigs } from '../gig.model';
-import { Venues } from '../venue.model';
 import { MatDialog } from '@angular/material/dialog';
-import { GigDetailsComponent } from '../gig-details/gig-details.component';
-import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
-import { Subject } from 'rxjs';
+import { GigDetailsComponent } from '../gig-details/gig-details.component'
 
 
 @Component({
@@ -80,14 +77,27 @@ export class GigCardComponent implements OnInit, OnDestroy {
 
   signUp(gig: Gigs): void {
 
+    const dailogRef = this.dialog.open(GigDetailsComponent, {
+      data: {
+              gigArtistName: gig.gigArtistName, 
+              gigVenueCity: gig.gigVenue.venueCity,
+              gigVenueName: gig.gigVenue.venueName,
+              gigDate: gig.gigDate  
+     
+        }
+    } );
 
-    // this.dialog.open(GigDetailsComponent, {
-    //   data: {
-    //     gigArtistName: gig.gigArtistName,
-    //    // gigVenueName: gig.gigVenueName,
-    //     gigDate: gig.gigDate
-    //   }
-    // } );
+ //  this.dialog.open(GigDetailsComponent);
+      
+      //{
+      // data: {
+      //   gigArtistName: gig.gigArtistName, 
+      //   gigDate: gig.gigDate  
+      // }
+   // }
+   //  );
+
+
 
   }
 

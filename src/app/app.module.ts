@@ -34,6 +34,8 @@ import { AddVenueComponent } from './venue-add/venue-add.component';
 import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './search.pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { GigPriceComponent } from './gig-price/gig-price.component';
+import { GigPriceConfirmationComponent } from './gig-price/gig-price-confirmation/gig-price-confirmation.component';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     SidenavListComponent,
     AddVenueComponent,
     SearchComponent,
-    SearchPipe
+    SearchPipe,
+    GigPriceComponent,
+    GigPriceConfirmationComponent
   ],
   imports: [
     ShareIconsModule,
@@ -71,5 +75,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
   ],
   providers: [GigService, AuthService, UIService, { provide: MaterialModule, useValue: [] }],
   bootstrap: [AppComponent]
+  
+  
 })
 export class AppModule { }

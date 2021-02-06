@@ -11,6 +11,7 @@ export interface Gigs {
     gigTotalPrice?: number;
     gigRunningCostPerPunter?: number;
     gigPunterCount?: number;
+    gigBusSeatCapacity?: number;
     giguserID?: string;
     gigID?: string;
     gigGenre?: string;

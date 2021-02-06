@@ -24,7 +24,6 @@ import {  MatStepperModule } from '@angular/material/stepper';
 import {  MatProgressBarModule } from '@angular/material/progress-bar';
 import {  MatMenuModule } from '@angular/material/menu';
 import {  MatChipsModule } from '@angular/material/chips';
-
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({

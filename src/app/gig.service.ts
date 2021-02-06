@@ -7,6 +7,7 @@ import { Gigs } from './gig.model';
 import { Venues } from './venue.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { analytics } from 'firebase';
+import { IfStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,10 @@ export class GigService {
   authSubscription: Subscription;
 
   private incrementGigs: Gigs;
+  private updateDriverGigs: Gigs; 
   private punterGigs: Gigs;
   private runningGigs: Gigs;
+  private runningPricingGig: Gigs; 
 
     // //
     searchTermViaService = new Subject<string>();
@@ -50,11 +53,13 @@ export class GigService {
 
 constructor(private db: AngularFirestore,
             private authServices: AuthService,
-           ) { }
+            ) { }
 
 addGig(gig: Gigs): void {
       this.db.collection('gigs').add(gig);
   }
+
+
 
 addVenue(venue: Venues): void {
       this.db.collection('venues').add(venue);
@@ -76,6 +81,7 @@ fetchGigs(): void {
       gigTotalPrice: doc.payload.doc.data()['gigTotalPrice'],
       gigRunningCostPerPunter: doc.payload.doc.data()['gigRunningCostPerPunter'],
       gigPunterCount: doc.payload.doc.data()['gigPunterCount'],
+      gigBusSeatCapacity: doc.payload.doc.data()['gigBusSeatCapacity'],
       gigID: doc.payload.doc.id
       };
     });
@@ -157,6 +163,29 @@ totalPunterIncrement(gigID: string): void {
 
 }
 
+
+updateGigwithDriver(gigID: string, driverUserID: string, totalCost: number , costPerPunter: number, BusSeatCapacity: number): void {
+
+  this.updateDriverGigs = this.availableGigs.find(ex => ex.id === gigID);
+
+ 
+  console.log('inservice gigCurrentCostPerPunter ' + totalCost) 
+  console.log('inservice gigPrice' + costPerPunter);
+
+  this.db.collection('gigs')
+    .doc(gigID)
+    .set({ gigRunningCostPerPunter: costPerPunter,
+           gigTotalPrice: totalCost,
+           gigDriverUserID: driverUserID,
+           gigBusSeatCapacity: BusSeatCapacity
+
+    }, { merge: true } 
+    );
+
+}
+
+
+
 puntersGigs(gigID: string): void {
 
   this.punterGigs = this.availableGigs.find(ex => ex.id === gigID);
@@ -198,6 +227,27 @@ searchforGigs(gig: Gigs): void {
 
   searchValues(artistName: string ): void{
     this.searchArtistNameChanged.next(artistName);
+  }
+
+
+  calcPrice(price: number,seats: number, gigID: string) {
+
+    this.runningPricingGig = this.availableGigs.find(ex => ex.id === gigID);
+
+   
+    console.log(this.runningPricingGig.gigArtistName); 
+    console.log(this.runningPricingGig.gigVenue.venueCity);
+    console.log(this.runningPricingGig.gigTotalPrice);
+    console.log(this.runningPricingGig.gigRunningCostPerPunter);
+
+    console.log(( price / seats) );
+
+    if(this.runningPricingGig.gigRunningCostPerPunter > ( price / seats) ) {
+
+      console.log('new low price... therefore!!!!');
+
+    }
+  
   }
 
 }

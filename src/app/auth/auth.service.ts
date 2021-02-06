@@ -12,6 +12,8 @@ export class AuthService {
 
     authChange = new Subject<boolean>();
     currentUser = new Subject<string>();
+    currentUserType = new Subject<string>();
+    
     private user: User;
     private  currentUserDetails: string;
 
@@ -39,7 +41,8 @@ export class AuthService {
 
         this.afauth.createUserWithEmailAndPassword(
         authData.email,
-        authData.password)
+        authData.password,
+       )
         .then(result => {
             console.log(result);
             this.UIservice.loadingStateChange.next(false);
@@ -49,6 +52,7 @@ export class AuthService {
         .catch(error => {
             console.log(error);
             });
+
 
     }
 
@@ -95,4 +99,11 @@ export class AuthService {
          });
     }
 
+
+    // getUserType(): void {
+    //     this.afauth.user.subscribe(user => {
+    //         this.currentUserType.next(user.);
+
+    //     });
+  // }
 }

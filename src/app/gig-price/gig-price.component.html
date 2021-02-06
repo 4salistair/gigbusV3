@@ -1,0 +1,44 @@
+    <div class="cardFormat" *ngFor="let gig of gigs" > 
+   
+     <mat-card class="example-card">
+        <mat-card-title>  {{ gig.gigVenue.venueCity }} <br>
+            {{ gig.gigArtistName }} @ {{ gig.gigVenue.venueName }} <br>
+            {{ gig.gigDate.toDate() | date }} </mat-card-title>
+             
+               <mat-card-content><br> 
+                  The current best price is per punter: <b>£{{ gig.gigRunningCostPerPunter |  number}} </b><br><br>
+                  With a total  of: <b>£{{ gig.gigTotalPrice }}</b><br><br>  
+                  There are currently total of {{ gig.gigBusSeatCapacity}} seats
+                </mat-card-content>
+    
+            
+                <form #f="ngForm"  (ngSubmit)="onSubmit(f,gig.id)">
+                
+                    <mat-label> Please submit your best price </mat-label>
+                        <input matInput ngModel name="gigPrice"  appearance="fill"> 
+                    <br>
+
+                    <mat-label> How many seats in the Vehicle? </mat-label>
+                <mat-form-field>
+                    <mat-select placeholder = "Number of seats"  ngModel name="gigSeats">
+                        <mat-option>Any</mat-option>  
+                        <mat-option value =1>1</mat-option>  
+                        <mat-option value =2>2</mat-option>  
+                        <mat-option value =3>3</mat-option>  
+                        <mat-option value =4>4</mat-option> 
+                        <mat-option value =5>5</mat-option>
+                        <mat-option value =6>6</mat-option>     
+                        <mat-option value =7>7</mat-option>   
+                        <mat-option value =8>8</mat-option>   
+                    </mat-select>
+                 </mat-form-field>
+                 <br>
+                <button type="Submit" mat-raised-button [disabled]="f.invalid">  Submit Price</button>      
+                <br>
+                
+               
+           
+            </form> 
+        </mat-card>
+        </div>
+            

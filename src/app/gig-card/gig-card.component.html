@@ -19,17 +19,17 @@
     
        
         <mat-card-content><br> 
-          The total cost: <b>£{{ gig.gigTotalPrice }}</b><br><br>
+          The total cost: <b>{{ gig.gigTotalPrice | currency:'GBP' }}</b><br><br>
           The number of people currently going: <b>{{ gig.gigPunterCount }}</b><br><br>
-          This means costs per person is: <b>£{{ gig.gigRunningCostPerPunter  }}</b><br><br>
+          This means costs per person is: <b>{{ gig.gigRunningCostPerPunter | currency:'GBP'  }}</b><br><br>
           Places left: <b>{{ 8 - gig.gigPunterCount }} </b><br><br>
-          With all seats taken the cost would be: <b>£{{ (gig.gigTotalPrice / 8) | number:'1.2-2' }}</b>    
+          With all seats taken the cost would be: <b> {{ (gig.gigTotalPrice / 8) | currency:'GBP'  }}</b>    
         </mat-card-content>
   
       
         <mat-card-actions>
         
-          <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gigs)"> SIGN UP </button> 
+          <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gig)"> SIGN UP </button> 
           <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">LIKE</button>
           <button mat-button  mat-raised-button *ngIf="isAuth">SHARE</button>
     

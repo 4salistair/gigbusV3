@@ -6,6 +6,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent} from './auth/signup/signup.component';
 import { GigMineComponent} from './gig-mine/gig-mine.component';
 import { AddVenueComponent} from './venue-add/venue-add.component';
+import { GigPriceComponent } from './gig-price/gig-price.component';
+
 
 const routes: Routes = [
   { path: '', component: GigCardComponent },
@@ -14,6 +16,7 @@ const routes: Routes = [
   { path: 'mygigs', component: GigMineComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'addvenue', component: AddVenueComponent},
+  { path: 'price', component: GigPriceComponent},
 ];
 
 @NgModule({

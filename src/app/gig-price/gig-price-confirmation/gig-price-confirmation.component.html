@@ -1,0 +1,46 @@
+
+<h1 mat-dialog-title > Submit Price</h1>
+
+
+<div *ngIf="(this.passData.gigCostPerPunter  <   this.passData.gigCurrentCostPerPunter); else elseBlock">
+  True Content
+  The Price per punter of {{ passData.gigCostPerPunter | currency:'GBP' }} you have submited is <br>
+  less than the previous price of {{  passData.gigCurrentCostPerPunter | currency:'GBP'  }} <br>
+ <br>
+  Are you sure?
+<br>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Yes</button>
+  <button mat-button [mat-dialog-close]="false">No </button>
+</mat-dialog-actions> 
+
+</div>
+<ng-template #elseBlock>
+  The price you submited isn't the cheapest. <br>
+  Try again? <br>
+  <button mat-button [mat-dialog-close]="true">OK</button>
+
+</ng-template> 
+
+
+
+
+
+<!-- {{ passData.gigCostPerPunter }} <br>
+{{  passData.gigCurrentCostPerPunter }}
+
+{{  update }} -->
+<!-- <mat-vertical-stepper> -->
+    <!-- <mat-step>
+      <ul>
+        It's simple GigBus is a platform to enable folks from your town to see more gigs.
+     </ul>
+    </mat-step> -->
+<!-- </mat-vertical-stepper>  -->
+
+<!-- <mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Yes</button>
+  <button mat-button [mat-dialog-close]="false">No </button>
+</mat-dialog-actions> -->
+
+    

@@ -46,6 +46,15 @@
         #datepicker>
       </mat-datepicker>
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder = "Type of User"  ngModel name="userType">
+          <mat-option>Any</mat-option>  
+          <mat-option value = Punter> Punter</mat-option>  
+          <mat-option value = Driver > Driver </mat-option>  
+          <mat-option value = Promoter> Promoter</mat-option>  
+      </mat-select>
+   </mat-form-field>
      
     
     <mat-checkbox
