@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 // import { UIService } from 'src/app/shared/ui.service';
 
@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
       email: form.value.email,
       password: form.value.password,
+      type: form.value.userType
 
     });
 

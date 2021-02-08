@@ -13,6 +13,8 @@ export class SidenavListComponent implements OnInit {
 
   isAuth = false;
   authSubscription: Subscription;
+  
+
   constructor(private authServices: AuthService) { }
 
   ngOnInit(): void {
@@ -20,6 +22,8 @@ export class SidenavListComponent implements OnInit {
     this.authSubscription = this.authServices.authChange.subscribe( authStatus => {
       this.isAuth = authStatus;
     } );
+
+
   }
 
   OnClose(): void  {

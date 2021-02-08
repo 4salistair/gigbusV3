@@ -14,7 +14,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuth = false;
   authSubscription: Subscription;
+  authTypeSubscription: Subscription
   isSearch = false;
+  userID: string;
+  authType: string;
 
   constructor(private authServices: AuthService) { }
 
@@ -22,7 +25,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.authSubscription = this.authServices.authChange.subscribe(authStatus => {
     this.isAuth = authStatus;
+    this.authServices.addUserType();
 
+
+    this.authTypeSubscription= this.authServices.authType.subscribe(authType =>{
+      this.authType = authType} )
+      
     });
   }
 

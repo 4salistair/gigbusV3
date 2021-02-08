@@ -35,7 +35,7 @@
                     Login
                 </a>
             </li>
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth && authType =='Punter'" >
                 <a class="a" style="cursor: pointer" routerLink="/mygigs">
                     My Gigs
                 </a>
