@@ -78,9 +78,7 @@ export class AuthService {
         authData.email,
         authData.password)
         .then(result => {
-            console.log('nnn_'+ result.user.uid);
             this.UIservice.loadingStateChange.next(false);
-            this.router.navigate(['/']);
             this.authChange.next(true);
 
             const filter =  this.db.collection('users', ref => ref.where('userID', '==', result.user.uid ));
@@ -97,7 +95,21 @@ export class AuthService {
             .subscribe((userType: AuthData[]) => { 
                 this.userType = userType
                 this.authType.next(this.userType[0].type);
+
+
+                if (this.userType[0].type == 'Driver') {
+
+                    this.router.navigate(['/price']);
+        
+                    } else {
+
+                        this.router.navigate(['/']); 
+                    }
+
+
             })
+        
+
         })
         .catch(error => {
             console.log(error)
@@ -130,9 +142,12 @@ export class AuthService {
 
 
     addUserType(): void {
-        this.getUserID()
-        this.currentUser.subscribe(UserID => this.userID = UserID);
-        console.log('user ID ' + this.userID);
+        // this.getUserID()
+        // this.currentUser.subscribe(UserID => this.userID = UserID);
+        // console.log('user ID ' + this.userID);
+
+
+
 
     }
 }

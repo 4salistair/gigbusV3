@@ -2,6 +2,8 @@
 
 <mat-toolbar>
 
+   
+      {{ authType}}
     <div fxHide.gt-xs>
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
@@ -34,34 +36,30 @@
                 <a class="a" style="cursor: pointer" routerLink="/login" (click)="onToggleWhenLoginOrSignup()">
                     Login
                 </a>
+           
             </li>
-            <li *ngIf="isAuth && authType =='Punter'" >
+           <li *ngIf="isAuth && (authType=='Punter')" >
                 <a class="a" style="cursor: pointer" routerLink="/mygigs">
                     My Gigs
                 </a>
-            </li>
-
-            <li *ngIf="isAuth"> 
+            </li> 
+            <li *ngIf="isAuth  && (authType=='Punter')"> 
                 <a class="a" style="cursor: pointer" routerLink="">
                     All Gigs
                 </a>
             </li>
 
-            <li> 
-                <a [ngClass]="{'grey' : isSearch, 'black': !isSearch}"  style="cursor: pointer" routerLink="" (click)="onToggleSearch()">
-                    Search
-                </a>
-            </li>
+       
 
-            <li *ngIf="isAuth"> 
+            <li *ngIf="isAuth && (authType=='Driver')"> 
                 <a class="a" style="cursor: pointer" routerLink="/price">
                     Price
                 </a>
             </li>
        
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth && (authType=='Promoter')">
                 <a>
-                <button mat-button class="nav-items" [matMenuTriggerFor]="menu">Config</button>
+                <button mat-button class="nav-items" [matMenuTriggerFor]="menu">Add Venue and Gig</button>
                     <mat-menu #menu="matMenu">
                       <button mat-menu-item routerLink="/addgigs">Add Gigs</button>
                       <button mat-menu-item routerLink="/addvenue">Add Venue</button>
@@ -73,10 +71,16 @@
                 <a style="cursor: pointer" (click)="onLogout()">
                     Logout
                 </a>
-            </li>     
+            </li>   
+            
+            <!-- <li *ngIf= "authType=='Punter'"> 
+                <a [ngClass]="{'grey' : isSearch, 'black': !isSearch}"  style="cursor: pointer" routerLink="" (click)="onToggleSearch()">
+                    Search
+                </a>
+            </li> -->
         </ul> 
        
     </div>
     
 </mat-toolbar>
-<app-search *ngIf="isSearch"></app-search>
+<!-- <app-search *ngIf="isSearch"></app-search> -->

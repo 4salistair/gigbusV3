@@ -5,7 +5,7 @@
             {{ gig.gigArtistName }} @ {{ gig.gigVenue.venueName }} <br>
             {{ gig.gigDate.toDate() | date }} </mat-card-title>
              
-               <mat-card-content><br> 
+               <mat-card-content *ngIf= "gig.gigBusSeatCapacity > 0"><br> 
                   The current best price is per punter: <b>£{{ gig.gigRunningCostPerPunter |  number}} </b><br><br>
                   With a total  of: <b>£{{ gig.gigTotalPrice }}</b><br><br>  
                   There are currently total of {{ gig.gigBusSeatCapacity}} seats

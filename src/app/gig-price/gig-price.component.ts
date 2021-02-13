@@ -31,6 +31,8 @@ export class GigPriceComponent implements OnInit,  OnDestroy  {
   driverSubmittedGigSeats: number;
   driverUserID: string;
 
+  isBestPrice: boolean;
+
   outcome: boolean;
 
   private fbSubs: Subscription[] = [];
@@ -71,10 +73,7 @@ export class GigPriceComponent implements OnInit,  OnDestroy  {
 
  this.driverSubmittedTotalPrice = form.value.gigPrice;
  this.driverSubmittedGigSeats = form.value.gigSeats
-
- 
  this.gigCostPerPunter = (form.value.gigPrice / form.value.gigSeats)
-
  console.log('new cost ' + this.gigCostPerPunter );
 
  this.gigsFiltered = this.gigs.filter(i => i.id == gigID)
@@ -83,14 +82,23 @@ export class GigPriceComponent implements OnInit,  OnDestroy  {
                                 this.gigCurrentCostPerPunter = gig.gigRunningCostPerPunter   
 });
  
- if( this.gigCurrentCostPerPunter > this.gigCostPerPunter  ) { 
-  console.log('current price  ' + this.gigCurrentCostPerPunter )
-  console.log('new cost ' + this.gigCostPerPunter );
+ if( (this.gigCurrentCostPerPunter == 0) || 
+     (this.gigCurrentCostPerPunter > this.gigCostPerPunter)  ) { 
+
+      this.isBestPrice = true;
+      console.log('this.isBestPrice = ' + this.isBestPrice);
+      console.log('current price  ' + this.gigCurrentCostPerPunter )
+      console.log('new cost ' + this.gigCostPerPunter );
 
  }
+ else{
+  this.isBestPrice = false;
+ } 
+
 
  const dailogRef =  this.dialog.open(GigPriceConfirmationComponent,{
   data: {
+         isBestPrice: this.isBestPrice,
          gigCostPerPunter: this.gigCostPerPunter,
          gigCurrentCostPerPunter: this.gigCurrentCostPerPunter
         }

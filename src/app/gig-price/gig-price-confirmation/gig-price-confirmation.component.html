@@ -2,12 +2,14 @@
 <h1 mat-dialog-title > Submit Price</h1>
 
 
-<div *ngIf="(this.passData.gigCostPerPunter  <   this.passData.gigCurrentCostPerPunter); else elseBlock">
-  True Content
+<div *ngIf="(passData.isBestPrice); else elseBlock">
+<br>
   The Price per punter of {{ passData.gigCostPerPunter | currency:'GBP' }} you have submited is <br>
-  less than the previous price of {{  passData.gigCurrentCostPerPunter | currency:'GBP'  }} <br>
+  less than the previous best price. <br>
+ <br>
  <br>
   Are you sure?
+<br>
 <br>
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]="true">Yes</button>
@@ -16,7 +18,7 @@
 
 </div>
 <ng-template #elseBlock>
-  The price you submited isn't the cheapest. <br>
+  The price you submited isn't the cheapest. <br> <br>
   Try again? <br>
   <button mat-button [mat-dialog-close]="true">OK</button>
 

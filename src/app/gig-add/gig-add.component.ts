@@ -71,8 +71,8 @@ GigVenueName: string;
       gigDescription: form.value.gigDescription,
       gigVenue: this.venueMapArry,
       gigPunterCount: 0,
-      gigRunningCostPerPunter: form.value.gigTotalPrice,
-      gigTotalPrice: form.value.gigTotalPrice,
+      gigRunningCostPerPunter: 0,
+      gigTotalPrice: 0,
       gigGenre: form.value.genre
 
       };

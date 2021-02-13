@@ -196,6 +196,7 @@ puntersGigs(gigID: string): void {
              this.userID = userID;
             });
 
+console.log('gigID_' + gigID);
 
   if (this.userID) {
                     this.db.collection('puntersGigs').add({
