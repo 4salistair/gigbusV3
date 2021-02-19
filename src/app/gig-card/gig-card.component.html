@@ -1,8 +1,7 @@
 
      <app-search></app-search>
      <div fxLayout="column" fxLayoutAlign="space-around center">
-     <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered | filter: ArtistName | SearchPipe: searchFiltered"> 
-      <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered | filter: ArtistName | SearchPipe: searchFiltered"> 
+     <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered | filter: ArtistName | SearchPipe: searchFiltered">  
         <div *ngIf="gig.gigTotalPrice > 0">
         
 
@@ -22,11 +21,20 @@
     
     
           <mat-card-content><br> 
-            The total cost: <b>{{ gig.gigTotalPrice | currency:'GBP' }}</b><br><br>
-            The number of people currently going: <b>{{ gig.gigPunterCount }}</b><br><br>
-            This means costs per person is: <b>{{ gig.gigRunningCostPerPunter | currency:'GBP'  }}</b><br><br>
-            Places left: <b>{{ 8 - gig.gigPunterCount }} </b><br><br>
-            With all seats taken the cost would be: <b> {{ (gig.gigTotalPrice / 8) | currency:'GBP'  }}</b>    
+           
+
+            <div  *ngIf="gig.gigPunterCount ==0; else PunterAreOnBus">
+              Be the first person on the Bus, with all {{ gig.gigBusSeatCapacity }} seats taken the cost would be: <b> {{ (gig.gigTotalPrice / gig.gigBusSeatCapacity ) | currency:'GBP'  }}</b> 
+            </div>
+
+            <ng-template #PunterAreOnBus>
+              The total cost: <b>{{ gig.gigTotalPrice | currency:'GBP' }}</b><br>
+              The number of people currently going: <b>{{ gig.gigPunterCount }}</b><br>
+              This means costs per person is: <b>{{ gig.gigRunningCostPerPunter | currency:'GBP'  }}</b><br><br>
+              Places left: <b>{{ 8 - gig.gigPunterCount }} </b><br><br>
+               
+            </ng-template>
+           
           </mat-card-content>
   
       
@@ -39,7 +47,6 @@
     <br>
     <br>
    </div>
-  </div>
 </div> 
 <!-- </div>   -->
     

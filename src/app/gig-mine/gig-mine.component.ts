@@ -23,6 +23,7 @@ import { Gigs } from '../gig.model';
 
    private GigSubscription: Subscription;
    filteredGigs: Gigs[];
+   currentGig: Gigs;
    Number: number;
    Determinate: number;
 
@@ -39,7 +40,17 @@ import { Gigs } from '../gig.model';
     }
 
     deleteGig(id): void {
+
       this.gigService.deleteGigForPunter(id);
+
+      this.currentGig = this.filteredGigs.find(ex => ex.id === id);
+
+      this.gigService.gigRoleBackGigNumbers(this.currentGig.gigID,
+                                           this.currentGig.gigPunterCount,
+                                           this.currentGig.gigTotalPrice);
+      
+
+     
 
     }
 

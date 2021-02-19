@@ -139,7 +139,8 @@ fetchGigsForCurrentUser(): void {
            gigPunterCount: doc.payload.doc.data()['gigPunterCount'],
            giguserID: doc.payload.doc.data()['userid'],
            gigID: doc.payload.doc.data()['gigID'],
-           gigRunningCostPerPunter: doc.payload.doc.data()['gigRunningCostPerPunter']
+           gigRunningCostPerPunter: doc.payload.doc.data()['gigRunningCostPerPunter'],
+           gigBusSeatCapacity: doc.payload.doc.data()['gigBusSeatCapacity']
            };
          });
        })
@@ -152,16 +153,26 @@ fetchGigsForCurrentUser(): void {
   }
 
 
-totalPunterIncrement(gigID: string): void {
+  //  this.gigService.runningCostDecrement(gigID);
+  totalPunterIncrementandRunningCostDecrement(gigID: string): void {
 
   this.incrementGigs = this.availableGigs.find(ex => ex.id === gigID);
   const punterCount = this.incrementGigs.gigPunterCount + 1;
+  const runningCost = (this.incrementGigs.gigTotalPrice) / ( punterCount );
 
- // const punterCount = 7;
-
+  console.log("runningCost_" + runningCost)
   this.db.collection('gigs')
     .doc(gigID)
-    .set({ gigPunterCount: punterCount }, { merge: true });
+    .set({ gigPunterCount: punterCount }, { merge: true },
+      );
+
+  this.db.collection('gigs')
+      .doc(gigID)
+      .set({ gigRunningCostPerPunter: runningCost }, { merge: true });
+
+
+    this.runningGigs = this.availableGigs.find(ex => ex.id === gigID);
+
 
 
    this.db.collection('puntersGigs',ref => ref.where('gigID', '==', gigID ))
@@ -171,11 +182,13 @@ totalPunterIncrement(gigID: string): void {
     snapshots => {
       if (snapshots.size > 0) {
         snapshots.forEach(orderItem => {
-          this.db.collection('puntersGigs').doc(orderItem.id).update({ gigPunterCount: punterCount })
+          this.db.collection('puntersGigs').doc(orderItem.id).update({ gigPunterCount: punterCount,
+                                                                       gigRunningCostPerPunter: runningCost })
         })
       }
     }
    )
+
 }
 
 
@@ -210,7 +223,6 @@ puntersGigs(gigID: string): void {
              this.userID = userID;
             });
 
-// console.log('gigBusSeatCapacity_' +  this.punterGigs.gigBusSeatCapacity);
 
   if (this.userID) {
                     this.db.collection('puntersGigs').add({
@@ -234,20 +246,30 @@ updateDocId(id){
 
 }  
 
-runningCostDecrement(gigID: string): void {
+// runningCostDecrement(gigID: string): void {
 
-  this.runningGigs = this.availableGigs.find(ex => ex.id === gigID);
-  const runningCost = this.runningGigs.gigTotalPrice / this.runningGigs.gigPunterCount ;
+//   this.runningGigs = this.availableGigs.find(ex => ex.id === gigID);
+//   const runningCost = this.runningGigs.gigTotalPrice / this.runningGigs.gigPunterCount ;
 
-  this.db.collection('gigs')
-    .doc(gigID)
-    .set({ gigRunningCostPerPunter: runningCost }, { merge: true });
+//   this.db.collection('gigs')
+//     .doc(gigID)
+//     .set({ gigRunningCostPerPunter: runningCost }, { merge: true });
 
-}
+// }
 
 deleteGigForPunter(id: string): void {
   this.db.collection('puntersGigs').doc(id).delete();
 }
+
+gigRoleBackGigNumbers(gigID: string, punterCount: number, TotalCost: number){
+
+  punterCount = punterCount -1;
+  const runningCost = (TotalCost / punterCount)
+
+  this.db.collection('gigs').doc(gigID).update({ gigPunterCount: punterCount,
+                                                 gigRunningCostPerPunter: runningCost });
+
+  }
 
 searchforGigs(gig: Gigs): void {
   this.searchGigsChanged.next(gig);

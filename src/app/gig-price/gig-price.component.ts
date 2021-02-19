@@ -115,9 +115,9 @@ export class GigPriceComponent implements OnInit,  OnDestroy  {
       console.log('form.value.gigPrice' + form.value.gigPrice);
       this.gigService.updateGigWithDriver(gigID, 
                                           this.driverUserID,
-                                          this.driverSubmittedTotalPrice, 
-                                          this.gigCostPerPunter,
-                                          this.driverSubmittedGigSeats 
+                                          Number(this.driverSubmittedTotalPrice), 
+                                          Number(this.gigCostPerPunter),
+                                          Number(this.driverSubmittedGigSeats)
                                            )
 
     }

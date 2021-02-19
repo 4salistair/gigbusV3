@@ -104,9 +104,10 @@ export class GigCardComponent implements OnInit, OnDestroy {
 
   addPunterGig(gigID: string): void {
 
-    this.gigService.totalPunterIncrement(gigID);
     this.gigService.puntersGigs(gigID);
-    this.gigService.runningCostDecrement(gigID);
+    this.gigService.totalPunterIncrementandRunningCostDecrement(gigID);
+   
+  //  this.gigService.runningCostDecrement(gigID);
 
 }
 
