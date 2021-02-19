@@ -1,4 +1,7 @@
-    <div class="cardFormat" *ngFor="let gig of gigs" > 
+   
+<div fxLayout="column" fxLayoutAlign="space-around center">
+   
+   <div class="cardFormat" *ngFor="let gig of gigs" > 
    
      <mat-card class="example-card">
         <mat-card-title>  {{ gig.gigVenue.venueCity }} <br>
@@ -41,4 +44,4 @@
             </form> 
         </mat-card>
         </div>
-            
+    </div>           

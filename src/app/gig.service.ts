@@ -7,7 +7,7 @@ import { Gigs } from './gig.model';
 import { Venues } from './venue.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { analytics } from 'firebase';
-import { IfStmt } from '@angular/compiler';
+import { identifierModuleUrl, IfStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -133,7 +133,7 @@ fetchGigsForCurrentUser(): void {
            id: doc.payload.doc.id,
            gigArtistName: doc.payload.doc.data()['gigArtistName'],
            gigDescription: doc.payload.doc.data()['gigDescription'],
-           gigVenueName: doc.payload.doc.data()['gigVenueName'],
+           gigVenue: doc.payload.doc.data()['gigVenue'],
            gigDate: doc.payload.doc.data()['gigDate'],
            gigTotalPrice: doc.payload.doc.data()['gigTotalPrice'],
            gigPunterCount: doc.payload.doc.data()['gigPunterCount'],
@@ -155,29 +155,43 @@ fetchGigsForCurrentUser(): void {
 totalPunterIncrement(gigID: string): void {
 
   this.incrementGigs = this.availableGigs.find(ex => ex.id === gigID);
-  const punterCount = this.incrementGigs.gigPunterCount ++;
+  const punterCount = this.incrementGigs.gigPunterCount + 1;
+
+ // const punterCount = 7;
 
   this.db.collection('gigs')
     .doc(gigID)
     .set({ gigPunterCount: punterCount }, { merge: true });
 
+
+   this.db.collection('puntersGigs',ref => ref.where('gigID', '==', gigID ))
+   .get()
+   .toPromise()
+   .then(
+    snapshots => {
+      if (snapshots.size > 0) {
+        snapshots.forEach(orderItem => {
+          this.db.collection('puntersGigs').doc(orderItem.id).update({ gigPunterCount: punterCount })
+        })
+      }
+    }
+   )
 }
 
 
-updateGigwithDriver(gigID: string, driverUserID: string, totalCost: number , costPerPunter: number, BusSeatCapacity: number): void {
+updateGigWithDriver(gigID: string, driverUserID: string, totalCost: number , costPerPunter: number, BusSeatCapacity: number): void {
 
   this.updateDriverGigs = this.availableGigs.find(ex => ex.id === gigID);
 
- 
-  console.log('inservice gigCurrentCostPerPunter ' + totalCost) 
-  console.log('inservice gigPrice' + costPerPunter);
 
   this.db.collection('gigs')
     .doc(gigID)
-    .set({ gigRunningCostPerPunter: costPerPunter,
+    .set({ gigBestPricePerPunter: costPerPunter,
+           gigRunningCostPerPunter: totalCost,
            gigTotalPrice: totalCost,
            gigDriverUserID: driverUserID,
            gigBusSeatCapacity: BusSeatCapacity
+           
 
     }, { merge: true } 
     );
@@ -196,16 +210,29 @@ puntersGigs(gigID: string): void {
              this.userID = userID;
             });
 
-console.log('gigID_' + gigID);
+// console.log('gigBusSeatCapacity_' +  this.punterGigs.gigBusSeatCapacity);
 
   if (this.userID) {
                     this.db.collection('puntersGigs').add({
                     ...this.punterGigs,
                     userid: this.userID
+                    }).then(res => { 
+                      this.updateDocId(res.id);  
+
                     });
                   }
 
   }
+
+
+updateDocId(id){
+
+  return this.db
+  .collection('puntersGigs')
+  .doc(id)
+  .set({ id: id }, { merge: true })
+
+}  
 
 runningCostDecrement(gigID: string): void {
 

@@ -30,12 +30,11 @@ import { Gigs } from '../gig.model';
     ngOnInit(): void {
 
       this.GigSubscription = this.gigService.filteredGigsChanged.subscribe(
-
         filteredGigs => { this.filteredGigs = filteredGigs;
         });
       this.gigService.fetchGigsForCurrentUser();
 
-      this.Number = 9;
+    //  this.Number = 9;
      // this.Determinate = 0;
     }
 

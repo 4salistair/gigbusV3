@@ -73,6 +73,7 @@ GigVenueName: string;
       gigPunterCount: 0,
       gigRunningCostPerPunter: 0,
       gigTotalPrice: 0,
+      gigBusSeatCapacity: 0,
       gigGenre: form.value.genre
 
       };
