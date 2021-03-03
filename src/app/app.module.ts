@@ -36,6 +36,8 @@ import { SearchPipe } from './search.pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { GigPriceComponent } from './gig-price/gig-price.component';
 import { GigPriceConfirmationComponent } from './gig-price/gig-price-confirmation/gig-price-confirmation.component';
+import { GigShareComponent } from './gig-mine/gig-share/gig-share.component';
+import { GigTrackComponent } from './gig-track/gig-track.component';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { GigPriceConfirmationComponent } from './gig-price/gig-price-confirmatio
     SearchComponent,
     SearchPipe,
     GigPriceComponent,
-    GigPriceConfirmationComponent
+    GigPriceConfirmationComponent,
+    GigShareComponent,
+    GigTrackComponent
   ],
   imports: [
     ShareIconsModule,

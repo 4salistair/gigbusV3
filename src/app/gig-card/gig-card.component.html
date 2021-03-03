@@ -1,11 +1,14 @@
 
-     <app-search></app-search>
+      <app-search></app-search> 
+
+     
+
      <div fxLayout="column" fxLayoutAlign="space-around center">
-     <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered | filter: ArtistName | SearchPipe: searchFiltered">  
-        <div *ngIf="gig.gigTotalPrice > 0">
+     <div class="cardFormat" *ngFor="let gig of gigs | PunterAlreadyOnGig: gigsFiltered | filter: ArtistName | filter: gigIDFromURL  | SearchPipe: searchFiltered ">  
+        
         
 
-         <mat-card>
+         <mat-card *ngIf="!isLoading">
         
           <mat-card-header> 
             <mat-card-title>    {{ gig.gigArtistName }} </mat-card-title>
@@ -22,28 +25,43 @@
     
           <mat-card-content><br> 
            
+              
 
             <div  *ngIf="gig.gigPunterCount ==0; else PunterAreOnBus">
-              Be the first person on the Bus, with all {{ gig.gigBusSeatCapacity }} seats taken the cost would be: <b> {{ (gig.gigTotalPrice / gig.gigBusSeatCapacity ) | currency:'GBP'  }}</b> 
+              Be the first person on the Bus. 
             </div>
-
             <ng-template #PunterAreOnBus>
-              The total cost: <b>{{ gig.gigTotalPrice | currency:'GBP' }}</b><br>
-              The number of people currently going: <b>{{ gig.gigPunterCount }}</b><br>
-              This means costs per person is: <b>{{ gig.gigRunningCostPerPunter | currency:'GBP'  }}</b><br><br>
-              Places left: <b>{{ 8 - gig.gigPunterCount }} </b><br><br>
-               
+              The number of people currently interested in going: <b>{{ gig.gigPunterCount }}</b><br>
             </ng-template>
+            
+           
+
+            <div  *ngIf="!gig.gigDriverUserID; else DriverYet">
+              As soon as a Driver adds a price we will let you know.
+            </div>
+            <ng-template #DriverYet>
+              The total cost: <b>{{ gig.gigTotalPrice | currency:'GBP' }}</b><br>
+              With all {{ gig.gigBusSeatCapacity }} seats taken the cost would be: <b> {{ (gig.gigTotalPrice / gig.gigBusSeatCapacity ) | currency:'GBP'  }}</b> 
+            </ng-template>
+
+            
+              <div  *ngIf="gig.gigDriverUserID && gig.gigPunterCount > 0">
+              This means costs the current cost per person is: <b>{{ gig.gigRunningCostPerPunter | currency:'GBP'  }}</b><br><br>
+              Places left: <b>{{ gig.gigBusSeatCapacity - gig.gigPunterCount }} </b><br><br>
+              </div> 
+           
            
           </mat-card-content>
   
       
         <mat-card-actions>
           <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gig)"> SIGN UP </button> 
-          <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">LIKE</button>
-          <button mat-button  mat-raised-button *ngIf="isAuth">SHARE</button>
+          <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">GET ON THE BUS</button>
+          <button mat-button  mat-raised-button *ngIf="isAuth">SHARE SHIT OUT IT</button>
         </mat-card-actions>
       </mat-card>
+
+      <mat-spinner *ngIf="isLoading"> </mat-spinner>
     <br>
     <br>
    </div>

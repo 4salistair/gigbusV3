@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GigService } from '../gig.service';
 import { UIService } from '../ui.service';
+import { AuthService } from  '../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { Gigs } from '../gig.model';
 import { Venues } from '../venue.model';
 import { NgForm } from '@angular/forms/forms';
+import { Router } from '@angular/router';
 
 
 
@@ -24,12 +26,17 @@ export class GigAddComponent implements OnInit {
   private venuesdetailsSubscription: Subscription;
   public city = 'Manchester';
 
+  private authSubscription : Subscription;
+  private userID: string;
+
 
 GigVenueName: string;
 
   constructor(
     private gigService: GigService,
-    private uiService: UIService
+    private uiService: UIService,
+    private authServices: AuthService,
+    private router: Router
     )
   { }
 
@@ -40,6 +47,12 @@ GigVenueName: string;
     );
 
     this.gigService.fetchVenues();
+
+
+    this.authSubscription = this.authServices.currentUser.subscribe(
+      userID => (this.userID = userID));
+              
+    this.authServices.getUserID();
 
     }
 
@@ -74,13 +87,15 @@ GigVenueName: string;
       gigRunningCostPerPunter: 0,
       gigTotalPrice: 0,
       gigBusSeatCapacity: 0,
-      gigGenre: form.value.genre
+      gigGenre: form.value.genre,
+      gigPromoterUserID: this.userID
 
       };
 
   this.gigService.addGig(this.gigMapArray);
   this.uiService.showSnackbar('Gig added', null, 3000);
   form.resetForm();
+  this.router.navigate(['/track']);    
   }
 
   Reset(form: NgForm): void {

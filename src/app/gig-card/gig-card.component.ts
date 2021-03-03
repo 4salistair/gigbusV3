@@ -5,6 +5,9 @@ import { AuthService } from '../auth/auth.service';
 import { Gigs } from '../gig.model';
 import { MatDialog } from '@angular/material/dialog';
 import { GigDetailsComponent } from '../gig-details/gig-details.component'
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import { UIService } from '../ui.service';
+
 
 
 @Component({
@@ -32,21 +35,47 @@ export class GigCardComponent implements OnInit, OnDestroy {
   searchArtistNameSubscription: Subscription;
   ArtistName: string;
 
+  gigIDFromURL: string;
+  singleGigFromURL: Gigs;
+
+  spinnerSubscription: Subscription;
+  Isloading: boolean;
+
+
   private fbSubs: Subscription[] = [];
 
   constructor( private gigService: GigService,
                private dialog: MatDialog,
-               private authService: AuthService
-  ) { }
+               private authService: AuthService,
+               private activatedRoute: ActivatedRoute,
+               private uiServive: UIService
+  ) { 
+
+    this.activatedRoute.queryParams.subscribe(params => {
+    let gigID = params['id'];
+
+  
+    
+    
+    if(gigID) {
+   
+       this.gigIDFromURL = gigID;
+    
+    }
+  });
+  }
 
   ngOnInit(): void {
 
 
     this.fbSubs.push(this.gigSubscription = this.gigService.gigsChanged.subscribe(
       gigs => (this.gigs = gigs)
+
+    
       ));
     this.gigService.fetchGigs();
 
+  
 
     this.fbSubs.push(this.authSubscription = this.authService.authChange.subscribe(
         authStatus => { (
@@ -71,6 +100,13 @@ export class GigCardComponent implements OnInit, OnDestroy {
         ArtistName => (this.ArtistName = ArtistName
       )
     ));
+
+
+    this.fbSubs.push(this.spinnerSubscription = this.uiServive.loadingStateChange.subscribe(
+      Isloading => ( this.Isloading = Isloading)
+
+      ) 
+     )
 
   }
 
@@ -106,6 +142,7 @@ export class GigCardComponent implements OnInit, OnDestroy {
 
     this.gigService.puntersGigs(gigID);
     this.gigService.totalPunterIncrementandRunningCostDecrement(gigID);
+    this.uiServive.showSnackbar('Your on this, track this Gigs progress using the MyGigs Menu Option',null,3000);
    
   //  this.gigService.runningCostDecrement(gigID);
 

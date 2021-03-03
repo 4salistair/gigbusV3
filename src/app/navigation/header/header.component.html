@@ -3,7 +3,7 @@
 <mat-toolbar>
 
    
-      {{ authType}}
+      <!-- {{ authType}} -->
     <div fxHide.gt-xs>
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
@@ -38,11 +38,12 @@
                 </a>
            
             </li>
-           <li *ngIf="isAuth && (authType=='Punter')" >
+           <li *ngIf="isAuth && (authType=='Punter')">
                 <a class="a" style="cursor: pointer" routerLink="/mygigs">
                     My Gigs
                 </a>
             </li> 
+
             <li *ngIf="isAuth  && (authType=='Punter')"> 
                 <a class="a" style="cursor: pointer" routerLink="">
                     All Gigs
@@ -66,6 +67,13 @@
                     </mat-menu>
                 </a>
             </li>
+
+            <li *ngIf="isAuth && (authType=='Driver')">
+                <!-- || (authType=='Promoter'))  -->
+                <a class="a" style="cursor: pointer" routerLink="/track">
+                    Track My Gigs
+                </a>
+            </li> 
 
             <li *ngIf="isAuth">
                 <a style="cursor: pointer" (click)="onLogout()">

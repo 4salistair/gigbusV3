@@ -4,6 +4,7 @@ import { UIService } from '../ui.service';
 import { Subscription } from 'rxjs';
 import { Venues } from '../venue.model';
 import { NgForm } from '@angular/forms/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class AddVenueComponent implements OnInit {
   constructor(
 
     private gigService: GigService,
-    private uiService: UIService)
+    private uiService: UIService,
+    private router: Router)
     { }
 
   ngOnInit(): void {
@@ -37,6 +39,7 @@ export class AddVenueComponent implements OnInit {
      this.gigService.addVenue(this.venueMapArray);
      this.uiService.showSnackbar('Venue added', null, 3000);
      form.resetForm();
+     this.router.navigate(['/track']);
   }
 
   Reset(form: NgForm): void {

@@ -8,6 +8,7 @@ import { Venues } from './venue.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { analytics } from 'firebase';
 import { identifierModuleUrl, IfStmt } from '@angular/compiler';
+import { UIService } from './ui.service'
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,7 @@ export class GigService {
 
 constructor(private db: AngularFirestore,
             private authServices: AuthService,
+            private uiservice: UIService
             ) { }
 
 addGig(gig: Gigs): void {
@@ -82,7 +84,9 @@ fetchGigs(): void {
       gigRunningCostPerPunter: doc.payload.doc.data()['gigRunningCostPerPunter'],
       gigPunterCount: doc.payload.doc.data()['gigPunterCount'],
       gigBusSeatCapacity: doc.payload.doc.data()['gigBusSeatCapacity'],
-      gigID: doc.payload.doc.id
+      gigID: doc.payload.doc.id,
+      gigDriverUserID: doc.payload.doc.data()['gigDriverUserID'],
+      gigPromoterUserID: doc.payload.doc.data()['gigPromoterUserID']
       };
     });
    })
@@ -112,7 +116,9 @@ fetchVenues(): void {
   .subscribe((venue: Venues[]) => {
     this.availableVenues =  venue;
     this.venuesChanged.next([...this.availableVenues]);
+    this.uiservice.loadingStateChange.next(false);
     });
+
 }
 
 
@@ -140,7 +146,9 @@ fetchGigsForCurrentUser(): void {
            giguserID: doc.payload.doc.data()['userid'],
            gigID: doc.payload.doc.data()['gigID'],
            gigRunningCostPerPunter: doc.payload.doc.data()['gigRunningCostPerPunter'],
-           gigBusSeatCapacity: doc.payload.doc.data()['gigBusSeatCapacity']
+           gigBusSeatCapacity: doc.payload.doc.data()['gigBusSeatCapacity'],
+           gigDriverUserID: doc.payload.doc.data()['gigDriverUserID'],
+           gigPromoterUserID: doc.payload.doc.data()['gigPromoterUserID']
            };
          });
        })
@@ -246,16 +254,6 @@ updateDocId(id){
 
 }  
 
-// runningCostDecrement(gigID: string): void {
-
-//   this.runningGigs = this.availableGigs.find(ex => ex.id === gigID);
-//   const runningCost = this.runningGigs.gigTotalPrice / this.runningGigs.gigPunterCount ;
-
-//   this.db.collection('gigs')
-//     .doc(gigID)
-//     .set({ gigRunningCostPerPunter: runningCost }, { merge: true });
-
-// }
 
 deleteGigForPunter(id: string): void {
   this.db.collection('puntersGigs').doc(id).delete();
@@ -284,11 +282,7 @@ searchforGigs(gig: Gigs): void {
 
     this.runningPricingGig = this.availableGigs.find(ex => ex.id === gigID);
 
-   
-    console.log(this.runningPricingGig.gigArtistName); 
-    console.log(this.runningPricingGig.gigVenue.venueCity);
-    console.log(this.runningPricingGig.gigTotalPrice);
-    console.log(this.runningPricingGig.gigRunningCostPerPunter);
+  
 
     console.log(( price / seats) );
 
@@ -302,6 +296,17 @@ searchforGigs(gig: Gigs): void {
 
 }
 
+
+// runningCostDecrement(gigID: string): void {
+
+//   this.runningGigs = this.availableGigs.find(ex => ex.id === gigID);
+//   const runningCost = this.runningGigs.gigTotalPrice / this.runningGigs.gigPunterCount ;
+
+//   this.db.collection('gigs')
+//     .doc(gigID)
+//     .set({ gigRunningCostPerPunter: runningCost }, { merge: true });
+
+// }
 // lookUpValueInDoc(collectName: string, documentID: string, fieldName: string ): void {
 
 //   const filter = this.db.doc(collectName + '/' + documentID);

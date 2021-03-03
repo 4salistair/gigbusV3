@@ -1,0 +1,97 @@
+<div fxLayout="column" fxLayoutAlign="space-around center">
+   <div class="cardFormat" *ngFor="let gig of gigs | filter: UserID">
+   
+    <mat-card>
+    <mat-card-header> 
+        <mat-card-title>  {{ gig.gigVenue.venueCity }} <br>
+            {{ gig.gigArtistName }} @ {{ gig.gigVenue.venueName }} <br>
+            {{ gig.gigDate.toDate() | date }} </mat-card-title>
+        </mat-card-header> 
+
+
+     <mat-card-content><br> 
+
+      <div  *ngIf="gig.gigPunterCount ==0; else PunterAreOnBus">
+        Waiting for the first Punter to get on the Bus. <br><br>
+      </div>
+    
+      <ng-template #PunterAreOnBus>
+         The number of people currently interested in going: <b>{{ gig.gigPunterCount }}</b><br>
+      </ng-template>  
+
+      <div  *ngIf="!gig.gigDriverUserID; else DriverYet">
+        Waiting for Driver to apply a price to this gig. <br><br>
+      </div>
+      <ng-template #DriverYet> 
+        The total cost: <b>{{ gig.gigTotalPrice | currency:'GBP' }}</b><br>
+        With all {{ gig.gigBusSeatCapacity }} seats taken the cost would be: <b> {{ (gig.gigTotalPrice / gig.gigBusSeatCapacity ) | currency:'GBP'  }}</b> <br><br>
+      </ng-template>
+
+      <div  *ngIf="gig.gigDriverUserID && gig.gigPunterCount > 0">
+         This means costs the current cost per person is: <b>{{ gig.gigRunningCostPerPunter | currency:'GBP'  }}</b><br><br>
+         Places left: <b>{{ gig.gigBusSeatCapacity - gig.gigPunterCount }} </b><br><br>
+      </div>
+    
+    </mat-card-content>
+
+ 
+   <!-- <mat-card-actions>
+     <button mat-raised-button *ngIf="!isAuth" mat-raised-button (click)="signUp(gig)"> SIGN UP </button> 
+     <button mat-button  mat-raised-button *ngIf="isAuth" (click)="addPunterGig(gig.id)">GET ON THE BUS</button>
+     <button mat-button  mat-raised-button *ngIf="isAuth">SHARE SHIT OUT IT</button>
+   </mat-card-actions> -->
+ </mat-card>
+
+ <!-- <mat-spinner *ngIf="isLoading"> </mat-spinner> -->
+<br>
+<br>
+</div>
+</div> 
+<!-- </div>   -->
+
+<!-- </div>    -->
+<!-- <div *ngIf="gigs$ | async; let Gigs; else loading">
+ <ul>
+   <li *ngFor="let gig of Gigs">
+     {{  Gigs.gigVenueName }}
+   </li>
+ </ul>
+ <div *ngIf="Gigs.length === 0">No results, try clearing filters</div>
+</div> -->
+
+
+<!-- <div  *ngIf="searchFiltered">  
+<mat-card>
+ <mat-card-header> 
+    <mat-card-title> {{ searchFiltered.gigArtistName }}   </mat-card-title>
+ </mat-card-header>
+</mat-card> 
+</div>
+-->
+
+
+<!-- <div  *ngIf="ArtistName">  
+<mat-card>
+<mat-card-header> 
+  <mat-card-title>  {{ ArtistName  }}    </mat-card-title>
+  <div   *ngFor="let gig of gigs | SearchPipe: searchFiltered">
+  </div>
+</mat-card-header>
+</mat-card> 
+</div> -->
+<!-- 
+<tr *ngFor="let user of userRecords | filter:filterTerm"></tr> -->
+
+
+<!-- <div class="cardFormat" *ngFor="let gig of gigs |  filter: ArtistName">
+<mat-card>
+
+ <mat-card-header> 
+   <mat-card-title>  {{ ArtistName  }}   </mat-card-title>
+   <mat-card-subtitle> {{ gig.gigArtistName }} </mat-card-subtitle>
+   <mat-card-subtitle> {{ gig.gigDescription }} </mat-card-subtitle>
+   <mat-card-subtitle> {{ gig.gigVenueName }} </mat-card-subtitle>
+   <mat-card-subtitle> {{ gig.gigDate }} </mat-card-subtitle>
+ </mat-card-header>
+</mat-card> 
+</div> -->

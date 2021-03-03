@@ -18,7 +18,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 constructor( @Inject(MAT_DIALOG_DATA) public passData: any) { }
 
-// constructor() {}
+
 
 
 ngOnInit(): void{

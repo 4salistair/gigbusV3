@@ -78,43 +78,59 @@ export class AuthService {
         authData.email,
         authData.password)
         .then(result => {
+
             this.UIservice.loadingStateChange.next(false);
             this.authChange.next(true);
-
-            const filter =  this.db.collection('users', ref => ref.where('userID', '==', result.user.uid ));
-            filter
-            .snapshotChanges()
-            .pipe(map(docData => {
-              return docData.map(doc => {
-              return {
-                type: doc.payload.doc.data()['userType']
-                };
-              });
-             })
-            )
-            .subscribe((userType: AuthData[]) => { 
-                this.userType = userType
-                this.authType.next(this.userType[0].type);
-
-
-                if (this.userType[0].type == 'Driver') {
-
-                    this.router.navigate(['/price']);
-        
-                    } else {
-
-                        this.router.navigate(['/']); 
-                    }
-
-
-            })
-        
+            this.pushUserType(result.user.uid);
 
         })
         .catch(error => {
             console.log(error)
-
+            this.UIservice.showSnackbar(error, null, 3000);;
+    
          });
+    }
+
+
+
+    pushUserType(result: string) :void {
+
+        const filter =  this.db.collection('users', ref => ref.where('userID', '==', result  ));
+              filter
+              .snapshotChanges()
+              .pipe(map(docData => {
+                return docData.map(doc => {
+                return { type: doc.payload.doc.data()['userType'] };
+                  });
+                 })
+                )
+                .subscribe((userType: AuthData[]) => { 
+                            this.userType = userType
+                            this.authType.next(this.userType[0].type);
+                    
+
+                        if(this.userType[0].type === 'Punter' ) {
+                            this.router.navigate(['/']);
+                        }
+
+                        if((this.userType[0].type) === 'Driver' ) {
+                            this.router.navigate(['/price']);
+                        }
+
+                         if(this.userType[0].type === 'Promoter' ) {
+                            this.router.navigate(['/track']);
+                        }
+
+
+
+
+
+
+
+        
+            })
+
+
     }
 
 
@@ -138,6 +154,9 @@ export class AuthService {
 
          });
     }
+
+
+
 
 
 

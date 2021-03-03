@@ -15,4 +15,6 @@ export interface Gigs {
     giguserID?: string;
     gigID?: string;
     gigGenre?: string;
+    gigDiverUserID?: string;
+    gigPromoterUserID?: string;
 }

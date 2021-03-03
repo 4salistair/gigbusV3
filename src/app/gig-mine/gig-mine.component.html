@@ -11,24 +11,27 @@
          <mat-card-content>   
       
        <br> 
-           The number of people on bus: <b>{{ gig.gigPunterCount }}</b><br>
-           This means costs per person is: <b>£{{ gig.gigRunningCostPerPunter | number:'1.2-2' }}</b><br>      
-           Places left on the bus: <b> {{ gig.gigBusSeatCapacity - gig.gigPunterCount }} </b><br>
-           With all seats taken the cost would be: <b>£{{ (gig.gigTotalPrice / gig.gigBusSeatCapacity  ) | number:'1.2-2' }}</b> 
-           
-           
+          The number of people currently interested in going:  <b>{{ gig.gigPunterCount }}</b><br>
+
+          <div  *ngIf="!gig.gigDriverUserID; else DriverYet">
+            As soon as a Driver adds a price we will let you know.
+          </div>
+
+          <ng-template #DriverYet>
+          This means costs per person is: <b>£{{ gig.gigRunningCostPerPunter | number:'1.2-2' }}</b><br>      
+          Places left on the bus: <b> {{ gig.gigBusSeatCapacity - gig.gigPunterCount }} </b><br>
+          With all seats taken the cost would be: <b>£{{ (gig.gigTotalPrice / gig.gigBusSeatCapacity  ) | number:'1.2-2' }}</b> 
+          </ng-template>
       
          
         </mat-card-content> 
       
         <mat-card-actions>
        
-          <button mat-button  mat-raised-button>SHARE </button>
+          <button mat-button  mat-raised-button (click)="shareGig(gig.id)">SHARE </button>
           <button mat-button  mat-raised-button (click)="deleteGig(gig.id)">Nah not for me</button>
   
-          <share-button mat-button   button="facebook"></share-button>
-          <share-button  button="twitter"></share-button> 
-          
+  
         </mat-card-actions> 
       </mat-card>
     <br>
